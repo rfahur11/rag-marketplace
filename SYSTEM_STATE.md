@@ -1,7 +1,7 @@
 # 🧭 System State & Living Context: Marketplace RAG Intelligence
 
-> **Terakhir Diperbarui**: 2026-09-20 18:36 WIB  
-> **Status Build**: Passing (100% Complete + Git Ready)  
+> **Terakhir Diperbarui**: 2026-09-20 18:51 WIB  
+> **Status Build**: Passing (100% Complete + Git Pushed)  
 > **Root Workspace**: `d:\porto\rag-marketplace`  
 
 ---
@@ -21,7 +21,7 @@
 - [x] **Tahap 3 & 4: Database Access Layer & Otak RAG** (`src/database.py` & `src/rag_engine.py`)
 - [x] **Tahap 5: Antarmuka UI Gradio** (`app.py`)
 - [x] **Tahap 6: Evaluasi Akurasi RAG & README Portal** (`evaluate.py` & `README.md`)
-- [x] **Git Readiness**: File `.gitignore` terkonfigurasi untuk keamanan API Key & kebersihan repo.
+- [x] **Git & Workflow Standard**: `.gitignore` aktif & Runbook menggunakan `activate` venv standar.
 
 ---
 
@@ -42,12 +42,13 @@
 ---
 
 ## 🚀 5. Quick Runbook Pindah Device / Setup Baru
-```bash
+```powershell
 git clone <url-repo-anda>
 cd rag-marketplace
 py -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
-.\.venv\Scripts\python.exe src/data_pipeline.py
-.\.venv\Scripts\python.exe evaluate.py
-.\.venv\Scripts\python.exe app.py
+.\.venv\Scripts\activate
+pip install -r requirements.txt
+python src/data_pipeline.py
+python evaluate.py
+python app.py
 ```

@@ -61,15 +61,16 @@ flowchart TD
 ## 🚀 Quickstart Guide
 
 ### 1. Prasyarat & Clone Repo
-```bash
+```powershell
 git clone <url-repository-anda>
 cd rag-marketplace
 ```
 
-### 2. Setup Virtual Environment
-```bash
+### 2. Setup Virtual Environment & Activate
+```powershell
 py -m venv .venv
-.\.venv\Scripts\python.exe -m pip install -r requirements.txt
+.\.venv\Scripts\activate
+pip install -r requirements.txt
 ```
 
 ### 3. Konfigurasi Environment Variable
@@ -78,16 +79,19 @@ Salin `.env.example` menjadi `.env` dan masukkan API Key Gemini Anda:
 GEMINI_API_KEY=your_gemini_api_key_here
 ```
 
-### 4. Jalankan Data Pipeline & Aplikasi UI
-```bash
+### 4. Jalankan Pipeline & Aplikasi
+```powershell
+# Pastikan virtualenv sudah aktif ( (venv) muncul di terminal )
+.\.venv\Scripts\activate
+
 # 1. Pipeline Data Ingestion ke DuckDB
-.\.venv\Scripts\python.exe src/data_pipeline.py
+python src/data_pipeline.py
 
 # 2. Jalankan Automated Test Evaluation Suite
-.\.venv\Scripts\python.exe evaluate.py
+python evaluate.py
 
 # 3. Jalankan Aplikasi Web Gradio
-.\.venv\Scripts\python.exe app.py
+python app.py
 ```
 
 Buka browser di `http://127.0.0.1:7860`.
