@@ -13,6 +13,16 @@ from src.data_pipeline import fetch_and_clean_data
 
 from src.rag_engine import process_rag_query
 
+# ZeroGPU compatibility for Hugging Face Spaces free tier
+try:
+    import spaces
+    @spaces.GPU(duration=1)
+    def dummy_gpu():
+        return None
+except ImportError:
+    def dummy_gpu():
+        return None
+
 # Auto-initialize database & vector index if running on clean environment (e.g., Hugging Face Spaces)
 if not os.path.exists(DUCKDB_PATH):
     print("[INIT] Database DuckDB tidak ditemukan. Menjalankan data pipeline & vector indexing...")
@@ -77,6 +87,10 @@ with gr.Blocks(title="Marketplace Intelligence System RAG") as demo:
     # 🛒 Marketplace Intelligence System (Hybrid RAG)
     ### Executive Dashboard & Anti-Hallucination AI Assistant untuk E-Commerce
     """)
+    
+    # Invisible button to ensure ZeroGPU event scanner registers the function
+    _dummy_btn = gr.Button(visible=False)
+    _dummy_btn.click(dummy_gpu)
     
     with gr.Tabs():
         # TAB 1: EXECUTIVE DASHBOARD
