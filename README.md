@@ -1,4 +1,17 @@
+---
+title: Marketplace Intelligence System RAG
+emoji: 🛒
+colorFrom: blue
+colorTo: indigo
+sdk: gradio
+sdk_version: 6.0.0
+app_file: app.py
+pinned: false
+---
+
 # 🛒 Marketplace Intelligence System (Hybrid RAG)
+
+[![Hugging Face Spaces](https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Live%20Demo-blue)](https://huggingface.co/spaces/rfahrur6045/rag-marketplace-intelligence)
 
 > **Enterprise-grade Executive Assistant & Anti-Hallucination RAG for Messy Multi-Channel E-Commerce Data.**
 
