@@ -33,18 +33,6 @@ def load_dashboard_kpis():
 
 def load_platform_breakdown():
     """Mengambil performa per marketplace platform."""
-    query = """
-    SELECT 
-        platform AS "Marketplace",
-        COUNT(*) AS "Total Transaksi",
-        SUM(CASE WHEN order_status = 'COMPLETED' THEN 1 ELSE 0 END) AS "Selesai",
-        SUM(CASE WHEN order_status = 'RETURNED' THEN 1 ELSE 0 END) AS "Retur",
-        CONCAT('Rp ', REPLACE(FORMAT('{:,.0f}', SUM(CASE WHEN order_status = 'COMPLETED' THEN order_value ELSE 0 END)), ',', '.')) AS "Net GMV"
-    FROM orders
-    GROUP BY platform
-    ORDER BY "Total Transaksi" DESC;
-    """
-    # Menggunakan query SQL standar DuckDB untuk formatting
     duck_query = """
     SELECT 
         platform AS "Marketplace",
@@ -74,8 +62,8 @@ def handle_chat_query(user_message, history):
     history.append((user_message, answer))
     return "", history, sql_used
 
-# Tampilan Gradio Interface
-with gr.Blocks(title="Marketplace Intelligence System RAG", theme=gr.themes.Soft()) as demo:
+# Tampilan Gradio Interface (Clean theme setup)
+with gr.Blocks(title="Marketplace Intelligence System RAG") as demo:
     gr.Markdown("""
     # 🛒 Marketplace Intelligence System (Hybrid RAG)
     ### Executive Dashboard & Anti-Hallucination AI Assistant untuk E-Commerce

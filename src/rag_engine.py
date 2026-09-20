@@ -15,6 +15,7 @@ from src.database import run_sql_query, query_vector_store
 # Load environment variables
 load_dotenv()
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.6-flash")
 
 def get_genai_client():
     """Mengembalikan client Gemini API yang valid."""
@@ -72,7 +73,7 @@ def generate_text_to_sql(client, query_text: str) -> str:
     prompt = f"{SYSTEM_SQL_PROMPT}\n\nPertanyaan Bisnis: {query_text}\nQuery SQL DuckDB:"
     
     response = client.models.generate_content(
-        model="gemini-2.5-flash",
+        model=GEMINI_MODEL,
         contents=prompt
     )
     
@@ -97,7 +98,7 @@ def execute_sql_with_self_correction(client, query_text: str, max_retries=2):
             error_msg = result["error"]
             fix_prompt = f"{SYSTEM_SQL_PROMPT}\n\nQuery SQL Sebelumnya yang ERROR:\n{current_sql}\n\nPesan Error DuckDB:\n{error_msg}\n\nPerbaiki Query SQL DuckDB tersebut:"
             response = client.models.generate_content(
-                model="gemini-2.5-flash",
+                model=GEMINI_MODEL,
                 contents=fix_prompt
             )
             current_sql = response.text.replace("```sql", "").replace("```", "").strip()
@@ -152,7 +153,7 @@ PETUNJUK RESPONS:
 """
 
     response = client.models.generate_content(
-        model="gemini-2.5-flash",
+        model=GEMINI_MODEL,
         contents=synthesis_prompt
     )
     
