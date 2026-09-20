@@ -1,6 +1,7 @@
 import os
 import sys
 import re
+import time
 
 # Enforce root directory in sys.path
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -15,13 +16,34 @@ from src.database import run_sql_query, query_vector_store
 # Load environment variables
 load_dotenv()
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
-GEMINI_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.6-flash")
+PRIMARY_MODEL = os.getenv("GEMINI_MODEL", "gemini-3.6-flash")
+FALLBACK_MODELS = [PRIMARY_MODEL, "gemini-2.0-flash", "gemini-1.5-flash"]
 
 def get_genai_client():
     """Mengembalikan client Gemini API yang valid."""
     if not GEMINI_API_KEY or GEMINI_API_KEY == "your_gemini_api_key_here":
         return None
     return genai.Client(api_key=GEMINI_API_KEY)
+
+def safe_generate_content(client, prompt: str, max_retries=2):
+    """Memanggil Gemini API dengan retry otomatis & fallback model jika terjadi lonjakan trafik (Error 503)."""
+    for model_name in FALLBACK_MODELS:
+        for attempt in range(max_retries):
+            try:
+                response = client.models.generate_content(
+                    model=model_name,
+                    contents=prompt
+                )
+                return response.text.strip()
+            except Exception as e:
+                err_str = str(e)
+                # Jika 503 (Server Busy) atau 429 (Rate Limit), tunggu sejenak lalu retry
+                if "503" in err_str or "UNAVAILABLE" in err_str or "429" in err_str:
+                    time.sleep(1.5 * (attempt + 1))
+                    continue
+                else:
+                    break
+    raise RuntimeError("Server AI sedang mengalami beban trafik tinggi. Silakan coba kembali dalam beberapa saat.")
 
 # 1. Intent Classifier Router
 def classify_intent(query_text: str) -> str:
@@ -71,13 +93,8 @@ ATURAN BISNIS METRIK (HARUS DIIKUTI):
 def generate_text_to_sql(client, query_text: str) -> str:
     """Menggunakan Gemini untuk menghasilkan query SQL berbasis schema & metrik bisnis."""
     prompt = f"{SYSTEM_SQL_PROMPT}\n\nPertanyaan Bisnis: {query_text}\nQuery SQL DuckDB:"
+    sql_text = safe_generate_content(client, prompt)
     
-    response = client.models.generate_content(
-        model=GEMINI_MODEL,
-        contents=prompt
-    )
-    
-    sql_text = response.text.strip()
     # Ekstrak SQL dari codeblock jika ada
     match = re.search(r"```sql\s*(.*?)\s*```", sql_text, re.DOTALL)
     if match:
@@ -97,11 +114,8 @@ def execute_sql_with_self_correction(client, query_text: str, max_retries=2):
         if attempt < max_retries:
             error_msg = result["error"]
             fix_prompt = f"{SYSTEM_SQL_PROMPT}\n\nQuery SQL Sebelumnya yang ERROR:\n{current_sql}\n\nPesan Error DuckDB:\n{error_msg}\n\nPerbaiki Query SQL DuckDB tersebut:"
-            response = client.models.generate_content(
-                model=GEMINI_MODEL,
-                contents=fix_prompt
-            )
-            current_sql = response.text.replace("```sql", "").replace("```", "").strip()
+            fixed_text = safe_generate_content(client, fix_prompt)
+            current_sql = fixed_text.replace("```sql", "").replace("```", "").strip()
             
     return current_sql, result
 
@@ -123,16 +137,17 @@ def process_rag_query(query_text: str) -> dict:
     sql_result = None
     reviews_result = None
     
-    # Path 1: Metrik / Angka (Text-to-SQL)
-    if intent in ["METRICS", "HYBRID"]:
-        sql_query, sql_result = execute_sql_with_self_correction(client, query_text)
-        
-    # Path 2: Ulasan / Kualitatif (Vector Search)
-    if intent in ["REVIEWS", "HYBRID"]:
-        reviews_result = query_vector_store(query_text, n_results=4)
-        
-    # Path 3: Synthesizer (Menyusun Jawaban Eksekutif Akhir)
-    synthesis_prompt = f"""
+    try:
+        # Path 1: Metrik / Angka (Text-to-SQL)
+        if intent in ["METRICS", "HYBRID"]:
+            sql_query, sql_result = execute_sql_with_self_correction(client, query_text)
+            
+        # Path 2: Ulasan / Kualitatif (Vector Search)
+        if intent in ["REVIEWS", "HYBRID"]:
+            reviews_result = query_vector_store(query_text, n_results=4)
+            
+        # Path 3: Synthesizer (Menyusun Jawaban Eksekutif Akhir)
+        synthesis_prompt = f"""
 Anda adalah Executive Assistant & Business Analyst ahli e-commerce.
 Susun jawaban yang profesional, akurat, ringkas, dan langsung menjawab pertanyaan pengguna.
 
@@ -152,18 +167,23 @@ PETUNJUK RESPONS:
 3. Gunakan poin-poin Markdown agar mudah dibaca oleh eksekutif bisnis.
 """
 
-    response = client.models.generate_content(
-        model=GEMINI_MODEL,
-        contents=synthesis_prompt
-    )
-    
-    return {
-        "intent": intent,
-        "sql_query": sql_query,
-        "sql_data": sql_result.get("data") if sql_result and sql_result.get("success") else None,
-        "reviews_data": reviews_result,
-        "answer": response.text.strip()
-    }
+        answer_text = safe_generate_content(client, synthesis_prompt)
+        
+        return {
+            "intent": intent,
+            "sql_query": sql_query,
+            "sql_data": sql_result.get("data") if sql_result and sql_result.get("success") else None,
+            "reviews_data": reviews_result,
+            "answer": answer_text
+        }
+    except Exception as e:
+        return {
+            "intent": intent,
+            "sql_query": sql_query,
+            "sql_data": None,
+            "reviews_data": reviews_result,
+            "answer": f"⚠️ **Server Google AI Sedang Sibuk (Lonjakan Trafik):**\n*{str(e)}*\n\nSilakan coba klik tombol kirim kembali dalam beberapa detik."
+        }
 
 if __name__ == "__main__":
     # Smoke test intent classifier
