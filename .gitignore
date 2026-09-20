@@ -1,0 +1,30 @@
+# Environment variables & Secrets (CRITICAL for security)
+.env
+*.env
+
+# Python Virtual Environments
+.venv/
+venv/
+env/
+ENV/
+
+# Python Cache & Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+
+# Local Generated Databases & Indexes (Keep repo lightweight)
+data/*.duckdb
+data/*.duckdb.wal
+data/chroma_db/
+
+# IDE & Editor Configuration
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS Generated Files
+.DS_Store
+Thumbs.db

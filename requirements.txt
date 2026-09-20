@@ -1,0 +1,8 @@
+duckdb>=0.10.0
+chromadb>=0.5.0
+pandas>=2.1.0
+pandera>=0.18.0
+gradio>=4.20.0
+google-genai>=0.1.0
+python-dotenv>=1.0.0
+pytest>=8.0.0
