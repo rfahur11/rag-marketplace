@@ -50,10 +50,16 @@ def classify_intent(query_text: str) -> str:
     """Mengklasifikasikan intent pertanyaan menjadi: METRICS, REVIEWS, atau HYBRID."""
     query_lower = query_text.lower()
     
-    # Keyword penanda ulasan/komplain kualitatif
-    review_keywords = ["komplain", "ulasan", "review", "kecewa", "rusak", "cacat", "alasan", "masalah", "buruk", "retur kenapa"]
-    # Keyword penanda metrik/angka
-    metric_keywords = ["gmv", "penjualan", "omset", "total", "berapa", "jumlah", "biaya", "aov", "margin", "voucher", "pendapatan"]
+    # Keyword penanda ulasan/komplain kualitatif (ID & EN)
+    review_keywords = [
+        "komplain", "ulasan", "review", "kecewa", "rusak", "cacat", "alasan", "masalah", "buruk", "retur kenapa",
+        "complaint", "feedback", "broken", "damaged", "defective", "dissatisfied", "why return", "poor quality"
+    ]
+    # Keyword penanda metrik/angka (ID & EN)
+    metric_keywords = [
+        "gmv", "penjualan", "omset", "total", "berapa", "jumlah", "biaya", "aov", "margin", "voucher", "pendapatan",
+        "sales", "revenue", "how much", "how many", "count", "amount", "return rate", "orders"
+    ]
     
     has_review = any(k in query_lower for k in review_keywords)
     has_metric = any(k in query_lower for k in metric_keywords)
@@ -120,16 +126,21 @@ def execute_sql_with_self_correction(client, query_text: str, max_retries=2):
     return current_sql, result
 
 # 3. Main RAG Pipeline Handler
-def process_rag_query(query_text: str) -> dict:
+def process_rag_query(query_text: str, language: str = "id") -> dict:
     """Fungsi utama pengolah RAG yang menggabungkan Intent Router, Text-to-SQL, Vector Search, dan Synthesis."""
     client = get_genai_client()
     if not client:
+        err_msg = (
+            "⚠️ **Gemini API Key Not Configured!**\nPlease configure your `GEMINI_API_KEY` in Hugging Face Space Secrets or `.env`."
+            if language == "en"
+            else "⚠️ **API Key Gemini Belum Dikonfigurasi!**\nSilakan isikan `GEMINI_API_KEY` Anda di file `.env` untuk mengaktifkan RAG Assistant."
+        )
         return {
             "intent": "ERROR",
             "sql_query": None,
             "sql_data": None,
             "reviews_data": None,
-            "answer": "⚠️ **API Key Gemini Belum Dikonfigurasi!**\nSilakan isikan `GEMINI_API_KEY` Anda di file `.env` untuk mengaktifkan RAG Assistant."
+            "answer": err_msg
         }
         
     intent = classify_intent(query_text)
@@ -147,8 +158,28 @@ def process_rag_query(query_text: str) -> dict:
             reviews_result = query_vector_store(query_text, n_results=4)
             
         # Path 3: Synthesizer (Menyusun Jawaban Eksekutif Akhir)
-        synthesis_prompt = f"""
-Anda adalah Executive Assistant & Business Analyst ahli e-commerce.
+        if language == "en":
+            synthesis_prompt = f"""You are an Executive Assistant & E-Commerce Business Analyst.
+Synthesize a professional, accurate, concise, and direct executive answer.
+
+USER QUESTION: {query_text}
+INTENT CATEGORY: {intent}
+
+SQL QUERY RESULTS (If Any):
+SQL Query Executed: `{sql_query}`
+Data Result: {sql_result.get('data') if sql_result and sql_result.get('success') else 'No SQL Data / Not Applicable'}
+
+CUSTOMER REVIEWS / FEEDBACK RESULTS (If Any):
+Customer Reviews: {reviews_result if reviews_result else 'No Review Data / Not Applicable'}
+
+RESPONSE GUIDELINES:
+1. Provide the response entirely in professional Business English.
+2. If SQL data exists, mention metric figures clearly formatted with IDR / Rupiah currency and percentages.
+3. If review data exists, summarize customer complaints and feedback clearly.
+4. Use executive-level bullet points with clean Markdown formatting.
+"""
+        else:
+            synthesis_prompt = f"""Anda adalah Executive Assistant & Business Analyst ahli e-commerce.
 Susun jawaban yang profesional, akurat, ringkas, dan langsung menjawab pertanyaan pengguna.
 
 PERTANYAAN PENGGUNA: {query_text}
