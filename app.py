@@ -123,7 +123,7 @@ def load_platform_breakdown(lang_key="id"):
 
 def handle_chat_query(user_message, history, lang_choice):
     """Handler interaksi chatbot RAG multibahasa (Gradio 6.x messages format)."""
-    lang_key = "en" if "English" in str(lang_choice) else "id"
+    lang_key = "en" if "en" in str(lang_choice).lower() else "id"
     t = TRANSLATIONS[lang_key]
     
     if not user_message.strip():
@@ -151,8 +151,8 @@ with gr.Blocks(title="Marketplace Intelligence System RAG") as demo:
             """)
         with gr.Column(scale=1):
             lang_selector = gr.Radio(
-                choices=["🇮🇩 Bahasa Indonesia", "🇬🇧 English"],
-                value="🇮🇩 Bahasa Indonesia",
+                choices=["ID (Bahasa)", "EN (English)"],
+                value="ID (Bahasa)",
                 label="🌐 Language / Bahasa",
                 interactive=True
             )
@@ -175,7 +175,7 @@ with gr.Blocks(title="Marketplace Intelligence System RAG") as demo:
             
             # Event handler dashboard refresh
             def update_dashboard(lang_choice):
-                lang_key = "en" if "English" in str(lang_choice) else "id"
+                lang_key = "en" if "en" in str(lang_choice).lower() else "id"
                 gmv, comp, ret, rate = load_dashboard_kpis()
                 df_plat = load_platform_breakdown(lang_key)
                 return gmv, comp, ret, rate, df_plat
@@ -237,7 +237,7 @@ with gr.Blocks(title="Marketplace Intelligence System RAG") as demo:
 
     # Dynamic language switch event handler
     def switch_language(lang_choice):
-        lang_key = "en" if "English" in str(lang_choice) else "id"
+        lang_key = "en" if "en" in str(lang_choice).lower() else "id"
         t = TRANSLATIONS[lang_key]
         df_plat = load_platform_breakdown(lang_key)
         
