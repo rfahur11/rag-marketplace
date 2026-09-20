@@ -51,7 +51,7 @@ def load_platform_breakdown():
     return pd.DataFrame()
 
 def handle_chat_query(user_message, history):
-    """Handler interaksi chatbot RAG."""
+    """Handler interaksi chatbot RAG (Gradio 6.x messages format)."""
     if not user_message.strip():
         return "", history, "Tidak ada query SQL yang dieksekusi."
     
@@ -59,7 +59,8 @@ def handle_chat_query(user_message, history):
     answer = rag_result["answer"]
     sql_used = rag_result["sql_query"] if rag_result["sql_query"] else "Query ini menggunakan Vector Search / Kualitatif (Tanpa SQL)."
     
-    history.append((user_message, answer))
+    history.append({"role": "user", "content": user_message})
+    history.append({"role": "assistant", "content": answer})
     return "", history, sql_used
 
 # Tampilan Gradio Interface (Clean theme setup)
