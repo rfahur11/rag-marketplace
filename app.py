@@ -8,8 +8,16 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 if BASE_DIR not in sys.path:
     sys.path.insert(0, BASE_DIR)
 
-from src.database import run_sql_query
+from src.database import run_sql_query, init_and_index_vector_store, DUCKDB_PATH
+from src.data_pipeline import fetch_and_clean_data
+
 from src.rag_engine import process_rag_query
+
+# Auto-initialize database & vector index if running on clean environment (e.g., Hugging Face Spaces)
+if not os.path.exists(DUCKDB_PATH):
+    print("[INIT] Database DuckDB tidak ditemukan. Menjalankan data pipeline & vector indexing...")
+    fetch_and_clean_data()
+    init_and_index_vector_store()
 
 def load_dashboard_kpis():
     """Mengambil data KPI utama untuk ditampilkan di Dashboard Executive."""
@@ -138,4 +146,4 @@ with gr.Blocks(title="Marketplace Intelligence System RAG") as demo:
             )
 
 if __name__ == "__main__":
-    demo.launch(server_name="127.0.0.1", server_port=7860, share=False)
+    demo.launch(server_name="0.0.0.0", server_port=7860)
