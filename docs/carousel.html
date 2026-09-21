@@ -380,15 +380,25 @@
     }
 
     .brand-mark {
-      width: 44px;
-      height: 44px;
-      background: linear-gradient(135deg, var(--cyan) 0%, #0284c7 100%);
-      border-radius: 12px;
+      height: 52px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 22px;
-      box-shadow: 0 4px 16px rgba(0, 242, 254, 0.3);
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      padding: 0;
+      overflow: visible;
+      flex-shrink: 0;
+    }
+
+    .brand-logo-img {
+      height: 48px;
+      width: auto;
+      object-fit: contain;
+      transform: scale(1.3);
+      filter: invert(1) hue-rotate(180deg) brightness(1.2) drop-shadow(0 0 12px rgba(0, 242, 254, 0.3));
+      mix-blend-mode: screen;
     }
 
     .brand-name {
@@ -772,30 +782,119 @@
     .c-cm { color: #64748b; font-style: italic; }
     .c-err { color: #fb7185; }
 
+    /* Marketplace Brand Badges Bar (Slide 1) */
+    .marketplace-bar {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin: 4px 0 8px;
+    }
+
+    .mp-bar-label {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-right: 4px;
+    }
+
+    /* Cover Hero Layout (Slide 1) */
+    .cover-hero-layout {
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .financial-alert-widget {
+      background: rgba(10, 16, 30, 0.85);
+      border: 1px solid rgba(244, 63, 94, 0.35);
+      border-radius: var(--radius-md);
+      padding: 22px;
+      box-shadow: 0 20px 50px rgba(244, 63, 94, 0.18), 0 0 30px rgba(0, 0, 0, 0.5);
+      position: relative;
+    }
+
+    .alert-chart-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+
+    .alert-tag {
+      font-size: 13px;
+      font-weight: 800;
+      color: var(--rose);
+      letter-spacing: 0.8px;
+    }
+
+    .alert-svg {
+      width: 100%;
+      height: 155px;
+    }
+
+    .alert-footer-note {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 10px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--rose);
+    }
+
+    .warning-pulse {
+      width: 8px;
+      height: 8px;
+      background: var(--rose);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--rose);
+      animation: pulse 1.5s infinite ease-in-out;
+    }
+
     /* Benchmark Big Stat Cards (Slide 6) */
     .metrics-trio {
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 24px;
     }
 
     .metric-row-card {
       display: flex;
       align-items: center;
-      gap: 34px;
-      padding: 28px 36px;
+      gap: 42px;
+      padding: 32px 42px;
       border-radius: var(--radius-md);
       background: rgba(15, 23, 42, 0.78);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 14px 35px rgba(0, 0, 0, 0.3);
     }
 
     .big-num {
-      font-size: 68px;
+      font-size: 72px;
       font-weight: 800;
       letter-spacing: -0.04em;
-      min-width: 145px;
+      min-width: 200px;
+      flex-shrink: 0;
       line-height: 1;
+    }
+
+    .metric-info h3 {
+      font-size: 27px;
+      color: #fff;
+      margin-bottom: 10px;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+    }
+
+    .metric-info p {
+      font-size: 20px;
+      color: var(--text-muted);
+      line-height: 1.55;
+      font-weight: 400;
     }
 
     /* Social CTA Action Cards (Slide 7) */
@@ -869,14 +968,25 @@
     }
 
     .author-avatar {
-      width: 32px;
       height: 32px;
-      background: rgba(255, 255, 255, 0.08);
-      border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 16px;
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      padding: 0;
+      overflow: visible;
+      flex-shrink: 0;
+    }
+
+    .author-avatar-img {
+      height: 28px;
+      width: auto;
+      object-fit: contain;
+      transform: scale(1.3);
+      filter: invert(1) hue-rotate(180deg) brightness(1.2);
+      mix-blend-mode: screen;
     }
 
     .slide-nav-hint {
@@ -977,12 +1087,15 @@
       
       <header class="slide-header">
         <div class="brand-cluster">
-          <div class="brand-mark">🛒</div>
+          <div class="brand-mark">
+            <img src="../../aset/logo.png" alt="Logo" class="brand-logo-img" onerror="this.src='d:/porto/aset/logo.png'; this.onerror=null;" />
+          </div>
           <div>
             <div class="brand-name">Marketplace Intelligence</div>
-            <div class="brand-series">System Architecture Series</div>
+            <div class="brand-series">Executive Architecture Series • Fahrur Rozi K</div>
           </div>
         </div>
+
         <div class="chip-badge chip-red">CRITICAL FLAW IN VANILLA RAG ⚠️</div>
       </header>
 
@@ -991,13 +1104,56 @@
           <span>The Fatal Blindspot of Vector Search</span>
         </div>
 
-        <h1 class="hero-title">
-          Why AI Chatbots Inevitably Fail at <span class="grad-rose">E-Commerce Financial Data</span>
-        </h1>
+        <!-- Cover Hero Layout with Red Alert Infographic -->
+        <div class="cover-hero-layout">
+          <div class="hero-left-col">
+            <h1 class="hero-title">
+              Why Standard AI Chatbots Inevitably Fail at <span class="grad-rose">E-Commerce Financial Data</span>
+            </h1>
 
-        <p class="subtitle-text">
-          Standard Vector Search computes cosine similarity between text chunks. It is mathematically incapable of aggregating revenue, return volumes, or seller margins.
-        </p>
+            <p class="subtitle-text">
+              Standard Vector Search computes cosine similarity between text chunks. It is mathematically incapable of aggregating revenue, return volumes, or seller margins.
+            </p>
+          </div>
+
+          <!-- Red Alert Financial Chart Infographic Card (From User Screenshot) -->
+          <div class="financial-alert-widget">
+            <div class="alert-chart-header">
+              <span class="alert-tag">⚠️ FINANCIAL HALLUCINATION RISK</span>
+            </div>
+            
+            <div class="alert-chart-body">
+              <svg viewBox="0 0 340 180" class="alert-svg">
+                <!-- Grid Lines -->
+                <line x1="20" y1="140" x2="320" y2="140" stroke="rgba(255,255,255,0.08)" stroke-dasharray="4" />
+                <line x1="20" y1="90" x2="320" y2="90" stroke="rgba(255,255,255,0.08)" stroke-dasharray="4" />
+                <line x1="20" y1="40" x2="320" y2="40" stroke="rgba(255,255,255,0.08)" stroke-dasharray="4" />
+                
+                <!-- Financial Bars -->
+                <rect x="35" y="85" width="24" height="55" rx="4" fill="#38bdf8" opacity="0.85" />
+                <rect x="85" y="45" width="24" height="95" rx="4" fill="#f43f5e" opacity="0.9" />
+                <rect x="135" y="105" width="24" height="35" rx="4" fill="#38bdf8" opacity="0.85" />
+                <rect x="185" y="30" width="24" height="110" rx="4" fill="#f43f5e" opacity="0.9" />
+                <rect x="235" y="65" width="24" height="75" rx="4" fill="#38bdf8" opacity="0.85" />
+                <rect x="285" y="15" width="24" height="125" rx="4" fill="#f43f5e" opacity="0.9" />
+                
+                <!-- Volatile Metric Lines -->
+                <path d="M 35 95 Q 85 20, 135 110 T 235 55 T 295 10" stroke="#f43f5e" stroke-width="3.5" fill="none" />
+                
+                <!-- Glowing Warning Triangle Overlay -->
+                <g transform="translate(145, 20)">
+                  <polygon points="32,4 62,56 2,56" fill="#f43f5e" stroke="#ffffff" stroke-width="2.5" filter="drop-shadow(0 0 15px rgba(244, 63, 94, 0.9))" />
+                  <text x="32" y="47" font-size="34" font-weight="900" fill="#ffffff" text-anchor="middle">!</text>
+                </g>
+              </svg>
+            </div>
+
+            <div class="alert-footer-note">
+              <span class="warning-pulse"></span>
+              <span>Vector Search Hallucinates Financial Metrics</span>
+            </div>
+          </div>
+        </div>
 
         <!-- Visual Comparison Simulation -->
         <div class="chat-simulation">
@@ -1023,8 +1179,10 @@
 
       <footer class="slide-footer">
         <div class="author-meta">
-          <span class="author-avatar">👨‍💻</span>
-          <span>github.com/rfahur11/rag-marketplace</span>
+          <div class="author-avatar">
+            <img src="../../aset/logo.png" alt="FR" class="author-avatar-img" onerror="this.src='d:/porto/aset/logo.png'; this.onerror=null;" />
+          </div>
+          <span>Fahrur Rozi K • Fullstack & AI Native Engineer</span>
         </div>
         <div class="slide-nav-hint">
           <span>Swipe for Architecture</span>
@@ -1041,10 +1199,12 @@
       
       <header class="slide-header">
         <div class="brand-cluster">
-          <div class="brand-mark">🔍</div>
+          <div class="brand-mark">
+            <img src="../../aset/logo.png" alt="Logo" class="brand-logo-img" onerror="this.src='d:/porto/aset/logo.png'; this.onerror=null;" />
+          </div>
           <div>
             <div class="brand-name">Problem Analysis</div>
-            <div class="brand-series">Root-Cause Breakdown</div>
+            <div class="brand-series">Root-Cause Breakdown • Fahrur Rozi K</div>
           </div>
         </div>
         <div class="chip-badge chip-cyan">THE CORE CONFLICT</div>
@@ -1091,8 +1251,10 @@
 
       <footer class="slide-footer">
         <div class="author-meta">
-          <span class="author-avatar">💡</span>
-          <span>Architectural Insights</span>
+          <div class="author-avatar">
+            <img src="../../aset/logo.png" alt="FR" class="author-avatar-img" onerror="this.src='d:/porto/aset/logo.png'; this.onerror=null;" />
+          </div>
+          <span>Fahrur Rozi K • Architectural Insights</span>
         </div>
         <div class="slide-nav-hint">
           <span class="page-indicator">02 / 07 ➔</span>
@@ -1108,10 +1270,12 @@
       
       <header class="slide-header">
         <div class="brand-cluster">
-          <div class="brand-mark">⚡</div>
+          <div class="brand-mark">
+            <img src="../../aset/logo.png" alt="Logo" class="brand-logo-img" onerror="this.src='d:/porto/aset/logo.png'; this.onerror=null;" />
+          </div>
           <div>
             <div class="brand-name">The Architecture</div>
-            <div class="brand-series">Production Blueprint</div>
+            <div class="brand-series">Production Blueprint • Fahrur Rozi K</div>
           </div>
         </div>
         <div class="chip-badge chip-purple">TWO-PRONGED PIPELINE</div>
@@ -1172,8 +1336,10 @@
 
       <footer class="slide-footer">
         <div class="author-meta">
-          <span class="author-avatar">⚙️</span>
-          <span>Deterministic + Semantic Intelligence</span>
+          <div class="author-avatar">
+            <img src="../../aset/logo.png" alt="FR" class="author-avatar-img" onerror="this.src='d:/porto/aset/logo.png'; this.onerror=null;" />
+          </div>
+          <span>Fahrur Rozi K • Deterministic + Semantic Intelligence</span>
         </div>
         <div class="slide-nav-hint">
           <span class="page-indicator">03 / 07 ➔</span>
@@ -1189,10 +1355,12 @@
       
       <header class="slide-header">
         <div class="brand-cluster">
-          <div class="brand-mark">📊</div>
+          <div class="brand-mark">
+            <img src="../../aset/logo.png" alt="Logo" class="brand-logo-img" onerror="this.src='d:/porto/aset/logo.png'; this.onerror=null;" />
+          </div>
           <div>
             <div class="brand-name">Executive Experience</div>
-            <div class="brand-series">Gradio 6.x Fullstack UI</div>
+            <div class="brand-series">Gradio 6.x Fullstack UI • Fahrur Rozi K</div>
           </div>
         </div>
         <div class="chip-badge chip-emerald">LIVE PRODUCTION UI</div>
@@ -1281,8 +1449,10 @@
 
       <footer class="slide-footer">
         <div class="author-meta">
-          <span class="author-avatar">🖥️</span>
-          <span>Zero-Latency Responsive Web App</span>
+          <div class="author-avatar">
+            <img src="../../aset/logo.png" alt="FR" class="author-avatar-img" onerror="this.src='d:/porto/aset/logo.png'; this.onerror=null;" />
+          </div>
+          <span>Fahrur Rozi K • Zero-Latency Responsive Web App</span>
         </div>
         <div class="slide-nav-hint">
           <span class="page-indicator">04 / 07 ➔</span>
@@ -1298,10 +1468,12 @@
       
       <header class="slide-header">
         <div class="brand-cluster">
-          <div class="brand-mark">🔄</div>
+          <div class="brand-mark">
+            <img src="../../aset/logo.png" alt="Logo" class="brand-logo-img" onerror="this.src='d:/porto/aset/logo.png'; this.onerror=null;" />
+          </div>
           <div>
             <div class="brand-name">Engineering Depth</div>
-            <div class="brand-series">Resilience & Self-Healing</div>
+            <div class="brand-series">Resilience & Self-Healing • Fahrur Rozi K</div>
           </div>
         </div>
         <div class="chip-badge chip-purple">FAULT-TOLERANT ENGINE</div>
@@ -1358,8 +1530,10 @@
 
       <footer class="slide-footer">
         <div class="author-meta">
-          <span class="author-avatar">🛡️</span>
-          <span>Zero Downtime Architecture</span>
+          <div class="author-avatar">
+            <img src="../../aset/logo.png" alt="FR" class="author-avatar-img" onerror="this.src='d:/porto/aset/logo.png'; this.onerror=null;" />
+          </div>
+          <span>Fahrur Rozi K • Zero Downtime Architecture</span>
         </div>
         <div class="slide-nav-hint">
           <span class="page-indicator">05 / 07 ➔</span>
@@ -1375,10 +1549,12 @@
       
       <header class="slide-header">
         <div class="brand-cluster">
-          <div class="brand-mark">🏆</div>
+          <div class="brand-mark">
+            <img src="../../aset/logo.png" alt="Logo" class="brand-logo-img" onerror="this.src='d:/porto/aset/logo.png'; this.onerror=null;" />
+          </div>
           <div>
             <div class="brand-name">System Verification</div>
-            <div class="brand-series">Audited Benchmarks</div>
+            <div class="brand-series">Audited Benchmarks • Fahrur Rozi K</div>
           </div>
         </div>
         <div class="chip-badge chip-emerald">100% TEST PASSING</div>
@@ -1396,9 +1572,9 @@
         <div class="metrics-trio">
           <div class="metric-row-card">
             <div class="big-num grad-cyan">0%</div>
-            <div>
-              <h3 style="font-size: 26px; color: #fff; margin-bottom: 6px;">Financial Hallucination</h3>
-              <p style="font-size: 20px; color: var(--text-muted); line-height: 1.4;">
+            <div class="metric-info">
+              <h3>Financial Hallucination</h3>
+              <p>
                 100% of arithmetic operations execute directly in the DuckDB OLAP engine. Zero guesswork.
               </p>
             </div>
@@ -1406,9 +1582,9 @@
 
           <div class="metric-row-card">
             <div class="big-num" style="color: var(--blue);">100%</div>
-            <div>
-              <h3 style="font-size: 26px; color: #fff; margin-bottom: 6px;">Automated Verification</h3>
-              <p style="font-size: 20px; color: var(--text-muted); line-height: 1.4;">
+            <div class="metric-info">
+              <h3>Automated Verification</h3>
+              <p>
                 Full 4/4 passing score on end-to-end database, business metrics, vector retrieval, and intent routing.
               </p>
             </div>
@@ -1416,9 +1592,9 @@
 
           <div class="metric-row-card">
             <div class="big-num grad-purple">$0</div>
-            <div>
-              <h3 style="font-size: 26px; color: #fff; margin-bottom: 6px;">Cloud Infrastructure Cost</h3>
-              <p style="font-size: 20px; color: var(--text-muted); line-height: 1.4;">
+            <div class="metric-info">
+              <h3>Cloud Infrastructure Cost</h3>
+              <p>
                 ZeroGPU & CPU Basic optimized. Self-healing cold-start provisioning hosted live on Hugging Face Spaces.
               </p>
             </div>
@@ -1428,8 +1604,10 @@
 
       <footer class="slide-footer">
         <div class="author-meta">
-          <span class="author-avatar">📈</span>
-          <span>Verified Benchmarks & Tests</span>
+          <div class="author-avatar">
+            <img src="../../aset/logo.png" alt="FR" class="author-avatar-img" onerror="this.src='d:/porto/aset/logo.png'; this.onerror=null;" />
+          </div>
+          <span>Fahrur Rozi K • Verified Benchmarks & Tests</span>
         </div>
         <div class="slide-nav-hint">
           <span class="page-indicator">06 / 07 ➔</span>
@@ -1446,10 +1624,12 @@
       
       <header class="slide-header">
         <div class="brand-cluster">
-          <div class="brand-mark">🚀</div>
+          <div class="brand-mark">
+            <img src="../../aset/logo.png" alt="Logo" class="brand-logo-img" onerror="this.src='d:/porto/aset/logo.png'; this.onerror=null;" />
+          </div>
           <div>
             <div class="brand-name">Open Source & Live Demo</div>
-            <div class="brand-series">Production Showcase</div>
+            <div class="brand-series">Production Showcase • Fahrur Rozi K</div>
           </div>
         </div>
         <div class="chip-badge chip-cyan">TRY IT NOW</div>
@@ -1502,8 +1682,10 @@
 
       <footer class="slide-footer">
         <div class="author-meta">
-          <span class="author-avatar">🤝</span>
-          <span>Let's Connect on LinkedIn & GitHub</span>
+          <div class="author-avatar">
+            <img src="../../aset/logo.png" alt="FR" class="author-avatar-img" onerror="this.src='d:/porto/aset/logo.png'; this.onerror=null;" />
+          </div>
+          <span>Fahrur Rozi K • Let's Connect on LinkedIn & GitHub</span>
         </div>
         <div class="slide-nav-hint">
           <span class="page-indicator">07 / 07 ✅</span>
