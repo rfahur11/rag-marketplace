@@ -3,24 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Marketplace Intelligence - LinkedIn Carousel (7 Slides)</title>
+  <title>Marketplace Intelligence - Executive LinkedIn Carousel (7 Slides)</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-dark: #07090e;
-      --slide-bg: #0b0f19;
-      --card-bg: rgba(18, 24, 38, 0.75);
-      --card-border: rgba(255, 255, 255, 0.08);
-      --accent-cyan: #00f0ff;
-      --accent-blue: #38bdf8;
-      --accent-purple: #c084fc;
-      --accent-emerald: #10b981;
-      --accent-red: #f43f5e;
-      --text-main: #f8fafc;
+      --bg-canvas: #03060d;
+      --slide-bg: #090e1a;
+      --card-bg: rgba(15, 23, 42, 0.7);
+      --card-border: rgba(255, 255, 255, 0.09);
+      
+      /* Creative Neon Palettes */
+      --cyan: #00f2fe;
+      --blue: #38bdf8;
+      --indigo: #6366f1;
+      --purple: #c084fc;
+      --rose: #fb7185;
+      --red: #f43f5e;
+      --emerald: #10b981;
+      --amber: #f59e0b;
+      
+      --text-white: #ffffff;
+      --text-100: #f1f5f9;
+      --text-200: #e2e8f0;
       --text-muted: #94a3b8;
-      --text-sub: #64748b;
+      --text-dim: #64748b;
     }
 
     * {
@@ -28,428 +36,724 @@
       margin: 0;
       padding: 0;
       font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
     }
 
     body {
-      background-color: var(--bg-dark);
-      color: var(--text-main);
+      background-color: var(--bg-canvas);
+      color: var(--text-100);
       display: flex;
       flex-direction: column;
       align-items: center;
-      padding: 40px 0 100px;
+      padding: 30px 0 120px;
       min-height: 100vh;
+      overflow-x: hidden;
     }
 
-    /* Floating Navigation Control Bar */
-    .toolbar {
+    /* ==========================================================================
+       TOP CONTROL BAR
+       ========================================================================== */
+    .control-bar {
       position: fixed;
-      top: 20px;
-      z-index: 1000;
-      background: rgba(15, 23, 42, 0.85);
-      backdrop-filter: blur(16px);
+      top: 18px;
+      z-index: 9999;
+      background: rgba(10, 15, 29, 0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
       border: 1px solid rgba(255, 255, 255, 0.12);
       border-radius: 9999px;
-      padding: 10px 24px;
+      padding: 8px 22px;
       display: flex;
       align-items: center;
       gap: 20px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+      box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.7);
     }
 
-    .toolbar-title {
+    .brand-title {
       font-weight: 700;
-      font-size: 15px;
+      font-size: 14px;
       color: #f8fafc;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
     }
 
-    .toolbar-title span.dot {
-      width: 8px;
-      height: 8px;
-      background: var(--accent-cyan);
+    .status-pulse {
+      width: 9px;
+      height: 9px;
+      background: var(--cyan);
       border-radius: 50%;
-      display: inline-block;
-      box-shadow: 0 0 10px var(--accent-cyan);
+      box-shadow: 0 0 12px var(--cyan);
+      animation: pulse 2s infinite ease-in-out;
     }
 
-    .toolbar-buttons {
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    .view-toggles {
       display: flex;
       align-items: center;
-      gap: 12px;
-    }
-
-    .btn {
-      background: rgba(255, 255, 255, 0.06);
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      color: #e2e8f0;
-      padding: 8px 16px;
+      background: rgba(0, 0, 0, 0.35);
       border-radius: 9999px;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      text-decoration: none;
+      padding: 3px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
     }
 
-    .btn:hover {
-      background: rgba(255, 255, 255, 0.12);
-      border-color: rgba(255, 255, 255, 0.25);
-      transform: translateY(-1px);
-    }
-
-    .btn-primary {
-      background: linear-gradient(135deg, #00f0ff, #0284c7);
-      color: #030712;
-      border: none;
-      font-weight: 700;
-    }
-
-    .btn-primary:hover {
-      background: linear-gradient(135deg, #38bdf8, #0ea5e9);
-      box-shadow: 0 0 20px rgba(0, 240, 255, 0.4);
-    }
-
-    .zoom-group {
-      display: flex;
-      align-items: center;
-      background: rgba(0, 0, 0, 0.3);
-      border-radius: 9999px;
-      padding: 4px;
-    }
-
-    .zoom-btn {
+    .view-btn {
       background: transparent;
       border: none;
       color: var(--text-muted);
-      padding: 4px 10px;
+      padding: 5px 12px;
       font-size: 12px;
       font-weight: 600;
       border-radius: 9999px;
       cursor: pointer;
+      transition: all 0.2s;
     }
 
-    .zoom-btn.active {
-      background: rgba(255, 255, 255, 0.15);
+    .view-btn.active, .view-btn:hover {
       color: #fff;
+      background: rgba(255, 255, 255, 0.12);
     }
 
-    /* Container for Carousel Slides */
-    .carousel-container {
+    .action-btns {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .action-btn {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      color: #f1f5f9;
+      padding: 7px 16px;
+      border-radius: 9999px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .action-btn:hover {
+      background: rgba(255, 255, 255, 0.14);
+      transform: translateY(-1px);
+    }
+
+    .action-btn.btn-glow {
+      background: linear-gradient(135deg, var(--cyan), #0284c7);
+      color: #030712;
+      border: none;
+      font-weight: 700;
+      box-shadow: 0 4px 15px rgba(0, 242, 254, 0.3);
+    }
+
+    .action-btn.btn-glow:hover {
+      box-shadow: 0 6px 25px rgba(0, 242, 254, 0.5);
+    }
+
+    /* ==========================================================================
+       CAROUSEL STAGE & SLIDE STRUCTURE (4:5 Golden LinkedIn Ratio: 1080 x 1350)
+       ========================================================================== */
+    .carousel-stage {
       display: flex;
       flex-direction: column;
-      gap: 48px;
+      gap: 60px;
       align-items: center;
       margin-top: 60px;
-      transition: transform 0.2s ease;
       transform-origin: top center;
+      transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    /* Standard LinkedIn Document Carousel Dimension (4:5 Aspect Ratio) */
     .slide {
       width: 1080px;
       height: 1350px;
-      background: radial-gradient(circle at 80% 20%, rgba(2, 132, 199, 0.12) 0%, transparent 50%),
-                  radial-gradient(circle at 20% 80%, rgba(192, 132, 252, 0.08) 0%, transparent 40%),
+      background: radial-gradient(circle at 85% 15%, rgba(0, 242, 254, 0.11) 0%, transparent 45%),
+                  radial-gradient(circle at 15% 85%, rgba(192, 132, 252, 0.09) 0%, transparent 45%),
+                  radial-gradient(circle at 50% 50%, rgba(15, 23, 42, 0.6) 0%, transparent 70%),
                   var(--slide-bg);
-      color: var(--text-main);
-      padding: 88px 92px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 36px;
+      box-shadow: 0 35px 90px -20px rgba(0, 0, 0, 0.85), 0 0 1px 1px rgba(255, 255, 255, 0.06) inset;
+      padding: 84px 92px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       position: relative;
       overflow: hidden;
-      border: 1px solid var(--card-border);
-      border-radius: 28px;
-      box-shadow: 0 30px 70px -15px rgba(0, 0, 0, 0.7);
       page-break-after: always;
       break-after: page;
     }
 
-    /* Subtle background grid pattern */
+    /* Subtle Architectural Grid Overlay */
     .slide::before {
       content: "";
       position: absolute;
       inset: 0;
-      background-image: linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                        linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-      background-size: 40px 40px;
+      background-image: 
+        linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      background-size: 48px 48px;
       pointer-events: none;
     }
 
-    /* Top Navigation Bar in Each Slide */
+    /* Corner Ambient Flare */
+    .ambient-flare {
+      position: absolute;
+      top: -120px;
+      right: -120px;
+      width: 450px;
+      height: 450px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 242, 254, 0.18) 0%, transparent 70%);
+      pointer-events: none;
+      filter: blur(40px);
+    }
+
+    /* ==========================================================================
+       SLIDE HEADER & FOOTER
+       ========================================================================== */
     .slide-header {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      z-index: 2;
+      z-index: 10;
     }
 
-    .brand-tag {
+    .brand-cluster {
       display: flex;
       align-items: center;
-      gap: 12px;
-      font-size: 20px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      color: #f1f5f9;
+      gap: 14px;
     }
 
-    .brand-icon {
-      width: 36px;
-      height: 36px;
-      background: linear-gradient(135deg, var(--accent-cyan), #0284c7);
-      border-radius: 10px;
+    .brand-mark {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, var(--cyan), #0284c7);
+      border-radius: 12px;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 18px;
-      color: #030712;
+      font-size: 22px;
+      box-shadow: 0 4px 15px rgba(0, 242, 254, 0.25);
+    }
+
+    .brand-name {
+      font-size: 21px;
       font-weight: 800;
-    }
-
-    .badge-chip {
-      padding: 8px 22px;
-      border-radius: 9999px;
-      font-size: 17px;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      background: rgba(0, 240, 255, 0.08);
-      color: var(--accent-cyan);
-      border: 1px solid rgba(0, 240, 255, 0.25);
-      box-shadow: 0 0 15px rgba(0, 240, 255, 0.08);
-    }
-
-    .badge-chip.red {
-      background: rgba(244, 63, 94, 0.1);
-      color: var(--accent-red);
-      border-color: rgba(244, 63, 94, 0.3);
-      box-shadow: 0 0 15px rgba(244, 63, 94, 0.1);
-    }
-
-    .badge-chip.purple {
-      background: rgba(192, 132, 252, 0.1);
-      color: var(--accent-purple);
-      border-color: rgba(192, 132, 252, 0.3);
-      box-shadow: 0 0 15px rgba(192, 132, 252, 0.1);
-    }
-
-    .badge-chip.green {
-      background: rgba(16, 185, 129, 0.1);
-      color: var(--accent-emerald);
-      border-color: rgba(16, 185, 129, 0.3);
-      box-shadow: 0 0 15px rgba(16, 185, 129, 0.1);
-    }
-
-    /* Slide Main Content Area */
-    .slide-body {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 36px;
-      z-index: 2;
-    }
-
-    .eyebrow {
-      font-size: 20px;
-      font-weight: 800;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--accent-cyan);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .eyebrow.red { color: var(--accent-red); }
-    .eyebrow.purple { color: var(--accent-purple); }
-
-    h1.slide-title {
-      font-size: 58px;
-      line-height: 1.15;
-      font-weight: 800;
-      letter-spacing: -0.03em;
+      letter-spacing: -0.01em;
       color: #ffffff;
     }
 
-    h1.slide-title span.cyan { color: var(--accent-cyan); }
-    h1.slide-title span.red { color: var(--accent-red); }
-    h1.slide-title span.purple { color: var(--accent-purple); }
-    h1.slide-title span.blue { color: var(--accent-blue); }
-
-    p.lead-text {
-      font-size: 26px;
-      color: var(--text-muted);
-      line-height: 1.45;
-      font-weight: 400;
+    .brand-series {
+      font-size: 15px;
+      color: var(--text-dim);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 600;
     }
 
-    /* Cards & Components */
-    .bento-card {
-      background: var(--card-bg);
-      backdrop-filter: blur(14px);
-      border: 1px solid var(--card-border);
-      border-radius: 22px;
-      padding: 34px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    }
-
-    .card-title {
-      font-size: 24px;
-      font-weight: 700;
-      color: var(--accent-cyan);
-      margin-bottom: 12px;
+    .chip-badge {
       display: flex;
       align-items: center;
-      gap: 10px;
-    }
-
-    .card-desc {
-      font-size: 21px;
-      color: #cbd5e1;
-      line-height: 1.45;
-    }
-
-    ul.bullet-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 22px;
-    }
-
-    ul.bullet-list li {
-      font-size: 23px;
-      line-height: 1.45;
-      display: flex;
-      align-items: flex-start;
-      gap: 18px;
-      color: #e2e8f0;
-    }
-
-    ul.bullet-list li span.icon {
-      font-size: 26px;
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-
-    /* Code Window Component */
-    .code-window {
-      background: #030712;
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 18px;
-      overflow: hidden;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-    }
-
-    .window-header {
-      background: #0f172a;
-      padding: 14px 20px;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-    }
-
-    .window-dots {
-      display: flex;
       gap: 8px;
+      padding: 8px 20px;
+      border-radius: 9999px;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      backdrop-filter: blur(12px);
     }
 
-    .window-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-    }
-    .dot-red { background: #ff5f56; }
-    .dot-yellow { background: #ffbd2e; }
-    .dot-green { background: #27c93f; }
-
-    .window-title {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 14px;
-      color: #64748b;
-      margin-left: 10px;
+    .chip-cyan {
+      background: rgba(0, 242, 254, 0.08);
+      color: var(--cyan);
+      border: 1px solid rgba(0, 242, 254, 0.3);
+      box-shadow: 0 0 15px rgba(0, 242, 254, 0.1);
     }
 
-    pre.code-content {
-      padding: 26px 30px;
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 19px;
-      line-height: 1.55;
-      color: #e2e8f0;
-      overflow-x: hidden;
+    .chip-red {
+      background: rgba(244, 63, 94, 0.1);
+      color: var(--rose);
+      border: 1px solid rgba(244, 63, 94, 0.3);
+      box-shadow: 0 0 15px rgba(244, 63, 94, 0.1);
     }
 
-    .kw { color: #c084fc; font-weight: 600; }
-    .fn { color: #38bdf8; }
-    .str { color: #34d399; }
-    .cm { color: #64748b; font-style: italic; }
-    .err { color: #fb7185; }
+    .chip-purple {
+      background: rgba(192, 132, 252, 0.1);
+      color: var(--purple);
+      border: 1px solid rgba(192, 132, 252, 0.3);
+      box-shadow: 0 0 15px rgba(192, 132, 252, 0.1);
+    }
 
-    /* Footer in Each Slide */
+    .chip-emerald {
+      background: rgba(16, 185, 129, 0.1);
+      color: var(--emerald);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      box-shadow: 0 0 15px rgba(16, 185, 129, 0.1);
+    }
+
     .slide-footer {
       display: flex;
       justify-content: space-between;
       align-items: center;
       border-top: 1px solid rgba(255, 255, 255, 0.08);
       padding-top: 28px;
-      font-size: 19px;
-      color: var(--text-sub);
-      font-weight: 600;
-      z-index: 2;
+      z-index: 10;
     }
 
-    .slide-footer .author-handle {
+    .author-meta {
       display: flex;
       align-items: center;
-      gap: 10px;
-      color: #94a3b8;
+      gap: 12px;
+      font-size: 18px;
+      color: var(--text-muted);
+      font-weight: 600;
     }
 
-    .slide-footer .author-handle span.avatar-badge {
-      width: 28px;
-      height: 28px;
-      background: rgba(255, 255, 255, 0.1);
+    .author-avatar {
+      width: 32px;
+      height: 32px;
       border-radius: 50%;
+      background: linear-gradient(135deg, #1e293b, #334155);
+      border: 1px solid rgba(255, 255, 255, 0.15);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 14px;
+      font-size: 16px;
     }
 
-    .slide-footer .slide-counter {
-      color: var(--accent-cyan);
+    .slide-nav-hint {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 19px;
       font-weight: 700;
+      color: var(--cyan);
     }
 
-    /* Print / Export Styles */
+    .page-indicator {
+      color: var(--text-dim);
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    /* ==========================================================================
+       TYPOGRAPHY & CONTENT BLOCKS
+       ========================================================================== */
+    .slide-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 36px;
+      z-index: 10;
+    }
+
+    .eyebrow-pill {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    h1.hero-title {
+      font-size: 60px;
+      line-height: 1.12;
+      font-weight: 800;
+      letter-spacing: -0.035em;
+      color: #ffffff;
+    }
+
+    .grad-cyan {
+      background: linear-gradient(135deg, #00f2fe 0%, #38bdf8 60%, #818cf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .grad-rose {
+      background: linear-gradient(135deg, #fb7185 0%, #f43f5e 50%, #e11d48 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .grad-purple {
+      background: linear-gradient(135deg, #c084fc 0%, #a855f7 50%, #818cf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    p.subtitle-text {
+      font-size: 25px;
+      color: var(--text-muted);
+      line-height: 1.48;
+      font-weight: 400;
+    }
+
+    /* ==========================================================================
+       PREMIUM CARDS & BENTO WIDGETS
+       ========================================================================== */
+    .bento-card {
+      background: rgba(15, 23, 42, 0.7);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid var(--card-border);
+      border-radius: 24px;
+      padding: 32px 36px;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.25);
+    }
+
+    .bento-card.highlight-red {
+      border-left: 6px solid var(--red);
+      background: linear-gradient(90deg, rgba(244, 63, 94, 0.08) 0%, rgba(15, 23, 42, 0.7) 35%);
+    }
+
+    .bento-card.highlight-cyan {
+      border-left: 6px solid var(--cyan);
+      background: linear-gradient(90deg, rgba(0, 242, 254, 0.08) 0%, rgba(15, 23, 42, 0.7) 35%);
+    }
+
+    .bento-card.highlight-purple {
+      border-left: 6px solid var(--purple);
+      background: linear-gradient(90deg, rgba(192, 132, 252, 0.08) 0%, rgba(15, 23, 42, 0.7) 35%);
+    }
+
+    /* Comparison Chat Simulation Box */
+    .chat-simulation {
+      background: #060a14;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+      padding: 24px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .prompt-bubble {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 22px;
+      color: #f8fafc;
+      font-weight: 600;
+    }
+
+    .prompt-tag {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 4px 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: 'JetBrains Mono', monospace;
+      color: var(--blue);
+      text-transform: uppercase;
+    }
+
+    .comparison-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .result-pill {
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .result-pill.failed {
+      background: rgba(244, 63, 94, 0.12);
+      border: 1px solid rgba(244, 63, 94, 0.3);
+    }
+
+    .result-pill.passed {
+      background: rgba(16, 185, 129, 0.12);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .pill-label {
+      font-size: 14px;
+      font-weight: 800;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    .pill-value {
+      font-size: 26px;
+      font-weight: 800;
+    }
+
+    .pill-desc {
+      font-size: 16px;
+      line-height: 1.4;
+      opacity: 0.9;
+    }
+
+    /* Visual Architecture Nodes */
+    .arch-flow {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      position: relative;
+    }
+
+    .flow-card {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      padding: 26px 30px;
+      border-radius: 20px;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .flow-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 28px;
+      flex-shrink: 0;
+    }
+
+    .flow-content h3 {
+      font-size: 23px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .flow-content p {
+      font-size: 19px;
+      color: var(--text-muted);
+      line-height: 1.45;
+    }
+
+    /* Live UI Mockup Component (Slide 4) */
+    .dashboard-mockup {
+      background: #090e1c;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+
+    .mockup-topbar {
+      background: #111827;
+      padding: 16px 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .kpi-tiles-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      padding: 20px 24px;
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    .kpi-tile {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 14px;
+      padding: 16px;
+    }
+
+    .kpi-tile-label {
+      font-size: 13px;
+      color: var(--text-dim);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .kpi-tile-val {
+      font-size: 23px;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .table-preview {
+      padding: 16px 24px 22px;
+    }
+
+    .table-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      font-size: 17px;
+    }
+
+    .table-header {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      letter-spacing: 0.5px;
+    }
+
+    /* Terminal Code Window Component (Slide 5) */
+    .terminal-window {
+      background: #020612;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+    }
+
+    .terminal-header {
+      background: #0f172a;
+      padding: 14px 22px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .terminal-dots {
+      display: flex;
+      gap: 8px;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    .dot-r { background: #ef4444; }
+    .dot-y { background: #f59e0b; }
+    .dot-g { background: #10b981; }
+
+    .terminal-title {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-left: 8px;
+    }
+
+    pre.code-block {
+      padding: 26px 30px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 19px;
+      line-height: 1.6;
+      color: #e2e8f0;
+      overflow-x: hidden;
+    }
+
+    .c-kw { color: var(--purple); font-weight: 600; }
+    .c-fn { color: var(--cyan); }
+    .c-str { color: #34d399; }
+    .c-cm { color: #64748b; font-style: italic; }
+    .c-err { color: #fb7185; }
+
+    /* Benchmark Big Stat Cards (Slide 6) */
+    .metrics-trio {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .metric-row-card {
+      display: flex;
+      align-items: center;
+      gap: 34px;
+      padding: 28px 36px;
+      border-radius: 22px;
+      background: rgba(15, 23, 42, 0.75);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .big-num {
+      font-size: 66px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      min-width: 140px;
+      line-height: 1;
+    }
+
+    /* Social CTA Action Cards (Slide 7) */
+    .cta-card-row {
+      display: flex;
+      flex-direction: column;
+      gap: 22px;
+    }
+
+    .interactive-link-box {
+      padding: 26px 32px;
+      border-radius: 20px;
+      background: rgba(15, 23, 42, 0.85);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.2s;
+    }
+
+    .link-info h4 {
+      font-size: 21px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .link-info p {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 17px;
+      color: var(--cyan);
+    }
+
+    .link-badge {
+      width: 48px;
+      height: 48px;
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.06);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+
+    /* ==========================================================================
+       PRINT / PDF PERFECTION STYLES
+       ========================================================================== */
     @media print {
       body {
         padding: 0 !important;
         background: transparent !important;
       }
 
-      .toolbar {
+      .control-bar {
         display: none !important;
       }
 
-      .carousel-container {
+      .carousel-stage {
         margin: 0 !important;
         transform: none !important;
         gap: 0 !important;
       }
 
       .slide {
-        border: none !important;
-        box-shadow: none !important;
-        border-radius: 0 !important;
         width: 1080px !important;
         height: 1350px !important;
+        border: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
         margin: 0 !important;
         page-break-after: always !important;
         break-after: page !important;
@@ -465,430 +769,572 @@
 <body>
 
   <!-- Floating Navigation Toolbar -->
-  <header class="toolbar">
-    <div class="toolbar-title">
-      <span class="dot"></span>
+  <header class="control-bar">
+    <div class="brand-title">
+      <span class="status-pulse"></span>
       Marketplace Intelligence Carousel
     </div>
-    <div class="zoom-group">
-      <button class="zoom-btn" onclick="setZoom(0.4)">40%</button>
-      <button class="zoom-btn active" onclick="setZoom(0.55)">55%</button>
-      <button class="zoom-btn" onclick="setZoom(0.75)">75%</button>
-      <button class="zoom-btn" onclick="setZoom(1.0)">100%</button>
+    
+    <div class="view-toggles">
+      <button class="view-btn" onclick="setZoom(0.4)">40%</button>
+      <button class="view-btn active" onclick="setZoom(0.55)">55%</button>
+      <button class="view-btn" onclick="setZoom(0.75)">75%</button>
+      <button class="view-btn" onclick="setZoom(1.0)">100%</button>
     </div>
-    <div class="toolbar-buttons">
-      <button class="btn btn-primary" onclick="window.print()">
+
+    <div class="action-btns">
+      <button class="action-btn btn-glow" onclick="window.print()">
         🖨️ Export PDF (Print)
       </button>
-      <a href="https://huggingface.co/spaces/rfahrur6045/rag-marketplace-intelligence" target="_blank" class="btn">
+      <a href="https://huggingface.co/spaces/rfahrur6045/rag-marketplace-intelligence" target="_blank" class="action-btn">
         🚀 Live Demo
       </a>
-      <a href="https://github.com/rfahur11/rag-marketplace" target="_blank" class="btn">
+      <a href="https://github.com/rfahur11/rag-marketplace" target="_blank" class="action-btn">
         💻 GitHub
       </a>
     </div>
   </header>
 
-  <!-- Carousel Slides Wrapper -->
-  <main class="carousel-container" id="carouselWrapper" style="transform: scale(0.55);">
+  <!-- Carousel Stage (Scaled dynamically via zoom buttons) -->
+  <main class="carousel-stage" id="stage" style="transform: scale(0.55);">
 
-    <!-- ==================== SLIDE 1 ==================== -->
-    <section class="slide" id="slide1">
-      <div class="slide-header">
-        <div class="brand-tag">
-          <div class="brand-icon">🛒</div>
-          <span>Marketplace Intelligence</span>
+    <!-- =======================================================================
+         SLIDE 1: COVER HOOK
+         ======================================================================= -->
+    <article class="slide" id="slide-1">
+      <div class="ambient-flare"></div>
+      
+      <header class="slide-header">
+        <div class="brand-cluster">
+          <div class="brand-mark">🛒</div>
+          <div>
+            <div class="brand-name">Marketplace Intelligence</div>
+            <div class="brand-series">System Architecture Series</div>
+          </div>
         </div>
-        <div class="badge-chip red">CRITICAL FLAW IN VANILLA RAG ⚠️</div>
-      </div>
+        <div class="chip-badge chip-red">CRITICAL FLAW IN VANILLA RAG ⚠️</div>
+      </header>
 
       <div class="slide-body">
-        <div class="eyebrow red">System Architecture Deep-Dive</div>
-        <h1 class="slide-title">
-          Why AI Chatbots Inevitably Fail at <span class="red">E-Commerce Financial Data</span>
+        <div class="eyebrow-pill" style="color: var(--rose);">
+          <span>The Fatal Blindspot of Vector Search</span>
+        </div>
+
+        <h1 class="hero-title">
+          Why AI Chatbots Inevitably Fail at <span class="grad-rose">E-Commerce Financial Data</span>
         </h1>
-        <p class="lead-text">
-          Standard Vector Search computes semantic similarity. It is mathematically incapable of calculating aggregations like Net GMV, returns, or margins.
+
+        <p class="subtitle-text">
+          Standard Vector Search computes cosine distance between text chunks. It is mathematically incapable of aggregating revenue, return volumes, or seller margins.
         </p>
 
-        <div class="bento-card" style="border-left: 6px solid var(--accent-red);">
-          <div style="font-size: 18px; text-transform: uppercase; font-weight: 700; color: #f43f5e; margin-bottom: 8px;">
-            The Reality Check:
+        <!-- Visual Comparison Simulation -->
+        <div class="chat-simulation">
+          <div class="prompt-bubble">
+            <span class="prompt-tag">User Query</span>
+            <span>"What is our Net GMV on Tokopedia this month?"</span>
           </div>
-          <div style="font-size: 26px; font-weight: 600; color: #f1f5f9; margin-bottom: 12px;">
-            "What is our Net GMV on Tokopedia this month?"
-          </div>
-          <div style="display: flex; gap: 20px; align-items: center; margin-top: 18px;">
-            <div style="padding: 12px 18px; border-radius: 12px; background: rgba(244, 63, 94, 0.15); color: #fb7185; font-weight: 700; font-size: 20px;">
-              ❌ Vanilla RAG: Hallucinates Random Numbers
+
+          <div class="comparison-grid">
+            <div class="result-pill failed">
+              <span class="pill-label" style="color: #fb7185;">❌ Vanilla Vector RAG</span>
+              <span class="pill-value" style="color: #f43f5e;">Rp 241,500,000</span>
+              <span class="pill-desc" style="color: #fca5a5;">Hallucinated estimate. Cannot aggregate completed transactions vs cancellations.</span>
             </div>
-            <div style="padding: 12px 18px; border-radius: 12px; background: rgba(16, 185, 129, 0.15); color: #34d399; font-weight: 700; font-size: 20px;">
-              ✅ Hybrid RAG: 100% Deterministic SQL
+            <div class="result-pill passed">
+              <span class="pill-label" style="color: #34d399;">✅ Hybrid Text-to-SQL</span>
+              <span class="pill-value" style="color: #10b981;">Rp 412,850,000</span>
+              <span class="pill-desc" style="color: #a7f3d0;">100% Deterministic DuckDB query following accounting metric rules.</span>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="slide-footer">
-        <div class="author-handle">
-          <span class="avatar-badge">👨‍💻</span>
+      <footer class="slide-footer">
+        <div class="author-meta">
+          <span class="author-avatar">👨‍💻</span>
           <span>github.com/rfahur11/rag-marketplace</span>
         </div>
-        <div class="slide-counter">01 / 07 ➔</div>
-      </div>
-    </section>
-
-    <!-- ==================== SLIDE 2 ==================== -->
-    <section class="slide" id="slide2">
-      <div class="slide-header">
-        <div class="brand-tag">
-          <div class="brand-icon">🔍</div>
-          <span>Problem Identification</span>
+        <div class="slide-nav-hint">
+          <span>Swipe for Architecture</span>
+          <span class="page-indicator">01 / 07 ➔</span>
         </div>
-        <div class="badge-chip">ARCHITECTURAL TRAP</div>
-      </div>
+      </footer>
+    </article>
+
+    <!-- =======================================================================
+         SLIDE 2: PROBLEM IDENTIFICATION
+         ======================================================================= -->
+    <article class="slide" id="slide-2">
+      <header class="slide-header">
+        <div class="brand-cluster">
+          <div class="brand-mark">🔍</div>
+          <div>
+            <div class="brand-name">Problem Analysis</div>
+            <div class="brand-series">Root-Cause Breakdown</div>
+          </div>
+        </div>
+        <div class="chip-badge chip-cyan">THE CORE CONFLICT</div>
+      </header>
 
       <div class="slide-body">
-        <div class="eyebrow">The Mechanics of Failure</div>
-        <h1 class="slide-title">
-          The Trap of <span class="cyan">Vanilla Vector RAG</span>
+        <div class="eyebrow-pill" style="color: var(--cyan);">
+          <span>Why Context Window Stuffing Breaks Down</span>
+        </div>
+
+        <h1 class="hero-title">
+          The 3 Fatal Traps of <span class="grad-cyan">Vanilla Vector RAG</span>
         </h1>
 
-        <ul class="bullet-list">
-          <li class="bento-card">
-            <span class="icon">❌</span>
-            <div>
-              <strong style="color: #fff; font-size: 24px;">Vector Similarity ≠ Arithmetic Calculation:</strong>
-              <div style="color: #94a3b8; margin-top: 6px;">
-                Cosine distance measures whether two text chunks are semantically related. It cannot execute <code>SUM</code>, <code>COUNT</code>, or <code>GROUP BY</code>.
-              </div>
-            </div>
-          </li>
-          <li class="bento-card">
-            <span class="icon">⚡</span>
-            <div>
-              <strong style="color: #fff; font-size: 24px;">Disparate Multi-Channel Schemas:</strong>
-              <div style="color: #94a3b8; margin-top: 6px;">
-                Tokopedia, Shopee, TikTok Shop, and Lazada define return statuses and fee deductions differently. Unstructured context causes catastrophic calculation errors.
-              </div>
-            </div>
-          </li>
-          <li class="bento-card">
-            <span class="icon">💥</span>
-            <div>
-              <strong style="color: #fff; font-size: 24px;">Direct Commercial & Boardroom Risk:</strong>
-              <div style="color: #94a3b8; margin-top: 6px;">
-                Executives cannot afford multi-thousand dollar business forecasting mistakes based on an AI that hallucinates financial figures.
-              </div>
-            </div>
-          </li>
-        </ul>
+        <div style="display: flex; flex-direction: column; gap: 20px;">
+          <div class="bento-card highlight-cyan">
+            <h3 style="font-size: 24px; color: #fff; margin-bottom: 8px; display: flex; align-items: center; gap: 12px;">
+              <span>❌ 1. Vector Similarity ≠ Arithmetic Math</span>
+            </h3>
+            <p style="font-size: 20px; color: var(--text-muted); line-height: 1.45;">
+              Cosine similarity retrieves documents with related vocabularies. It cannot perform mathematical operations like <code>SUM()</code>, <code>COUNT()</code>, or filtered percentages over 50,000 transaction rows.
+            </p>
+          </div>
+
+          <div class="bento-card highlight-purple">
+            <h3 style="font-size: 24px; color: #fff; margin-bottom: 8px; display: flex; align-items: center; gap: 12px;">
+              <span>⚡ 2. Multi-Channel Schema Chaos</span>
+            </h3>
+            <p style="font-size: 20px; color: var(--text-muted); line-height: 1.45;">
+              Tokopedia, Shopee, TikTok Shop, and Lazada use conflicting status tags (<code>COMPLETED</code>, <code>FINISH</code>, <code>DELIVERED</code>, <code>RETURNED</code>). Fragmented vector embeddings mix statuses together.
+            </p>
+          </div>
+
+          <div class="bento-card highlight-red">
+            <h3 style="font-size: 24px; color: #fff; margin-bottom: 8px; display: flex; align-items: center; gap: 12px;">
+              <span>💥 3. High-Stakes Financial Exposure</span>
+            </h3>
+            <p style="font-size: 20px; color: var(--text-muted); line-height: 1.45;">
+              When C-level executives use AI to plan procurement and inventory budgets, a 15% calculation discrepancy leads to multi-thousand-dollar cashflow disasters.
+            </p>
+          </div>
+        </div>
       </div>
 
-      <div class="slide-footer">
-        <div class="author-handle">
-          <span class="avatar-badge">💡</span>
+      <footer class="slide-footer">
+        <div class="author-meta">
+          <span class="author-avatar">💡</span>
           <span>Architectural Insights</span>
         </div>
-        <div class="slide-counter">02 / 07 ➔</div>
-      </div>
-    </section>
-
-    <!-- ==================== SLIDE 3 ==================== -->
-    <section class="slide" id="slide3">
-      <div class="slide-header">
-        <div class="brand-tag">
-          <div class="brand-icon">⚡</div>
-          <span>The Solution</span>
+        <div class="slide-nav-hint">
+          <span class="page-indicator">02 / 07 ➔</span>
         </div>
-        <div class="badge-chip purple">TWO-PRONGED PIPELINE</div>
-      </div>
+      </footer>
+    </article>
+
+    <!-- =======================================================================
+         SLIDE 3: THE HYBRID ARCHITECTURE SOLUTION
+         ======================================================================= -->
+    <article class="slide" id="slide-3">
+      <header class="slide-header">
+        <div class="brand-cluster">
+          <div class="brand-mark">⚡</div>
+          <div>
+            <div class="brand-name">The Architecture</div>
+            <div class="brand-series">Production Blueprint</div>
+          </div>
+        </div>
+        <div class="chip-badge chip-purple">TWO-PRONGED PIPELINE</div>
+      </header>
 
       <div class="slide-body">
-        <div class="eyebrow purple">Hybrid RAG Blueprint</div>
-        <h1 class="slide-title">
-          Two-Pronged <span class="purple">Hybrid Architecture</span>
+        <div class="eyebrow-pill" style="color: var(--purple);">
+          <span>The Golden Engineering Rule</span>
+        </div>
+
+        <h1 class="hero-title">
+          Two-Pronged <span class="grad-purple">Hybrid Architecture</span>
         </h1>
-        <p class="lead-text">
-          Never force a Vector DB to calculate arithmetic, and never force SQL to decode customer emotions.
+
+        <p class="subtitle-text">
+          Never force a Vector DB to calculate arithmetic, and never force an SQL query to decode customer emotions.
         </p>
 
-        <div style="display: flex; flex-direction: column; gap: 24px;">
-          <div class="bento-card" style="border-left: 6px solid var(--accent-cyan);">
-            <div class="card-title" style="color: var(--accent-cyan);">
-              <span>1. Deterministic Path (DuckDB In-Memory OLAP)</span>
+        <!-- Architecture Flow Diagram -->
+        <div class="arch-flow">
+          <div class="flow-card" style="border-left: 6px solid var(--cyan);">
+            <div class="flow-icon" style="background: rgba(0, 242, 254, 0.15); color: var(--cyan);">
+              📊
             </div>
-            <div class="card-desc">
-              Natural language queries for numbers (GMV, volume, return rates) convert into validated DuckDB SQL governed by a strict Semantic Metric Layer. <strong>100% deterministic accuracy.</strong>
+            <div class="flow-content">
+              <h3 style="color: var(--cyan);">1. Deterministic Analytical Path (DuckDB In-Memory OLAP)</h3>
+              <p>
+                Quantitative queries convert to SQL adhering to standard accounting definitions. Net GMV and return metrics execute with <strong>100% mathematical precision</strong>.
+              </p>
+            </div>
+          </div>
+
+          <div class="flow-card" style="border-left: 6px solid var(--purple);">
+            <div class="flow-icon" style="background: rgba(192, 132, 252, 0.15); color: var(--purple);">
+              💬
+            </div>
+            <div class="flow-content">
+              <h3 style="color: var(--purple);">2. Qualitative Feedback Path (ChromaDB Vector Store)</h3>
+              <p>
+                Customer complaints are semantically parsed to isolate root causes behind product returns: defective units, wrong sizing, or courier packaging damage.
+              </p>
             </div>
           </div>
 
-          <div class="bento-card" style="border-left: 6px solid var(--accent-purple);">
-            <div class="card-title" style="color: var(--accent-purple);">
-              <span>2. Qualitative Path (ChromaDB Vector Store)</span>
+          <div class="flow-card" style="border-left: 6px solid var(--emerald); background: rgba(16, 185, 129, 0.06);">
+            <div class="flow-icon" style="background: rgba(16, 185, 129, 0.15); color: var(--emerald);">
+              🧠
             </div>
-            <div class="card-desc">
-              Customer reviews and complaints across platforms are semantically indexed to unearth root causes: defective parts, sizing issues, or courier delays.
+            <div class="flow-content">
+              <h3 style="color: var(--emerald);">3. Executive Synthesizer (Gemini Cascade)</h3>
+              <p>
+                Merges exact SQL metrics with qualitative sentiment into structured, boardroom-ready executive summaries.
+              </p>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="slide-footer">
-        <div class="author-handle">
-          <span class="avatar-badge">⚙️</span>
-          <span>Deterministic + Semantic AI</span>
+      <footer class="slide-footer">
+        <div class="author-meta">
+          <span class="author-avatar">⚙️</span>
+          <span>Deterministic + Semantic Intelligence</span>
         </div>
-        <div class="slide-counter">03 / 07 ➔</div>
-      </div>
-    </section>
+        <div class="slide-nav-hint">
+          <span class="page-indicator">03 / 07 ➔</span>
+        </div>
+      </footer>
+    </article>
 
-    <!-- ==================== SLIDE 4 ==================== -->
-    <section class="slide" id="slide4">
-      <div class="slide-header">
-        <div class="brand-tag">
-          <div class="brand-icon">📊</div>
-          <span>Executive Interface</span>
+    <!-- =======================================================================
+         SLIDE 4: EXECUTIVE DASHBOARD & BILINGUAL UI
+         ======================================================================= -->
+    <article class="slide" id="slide-4">
+      <header class="slide-header">
+        <div class="brand-cluster">
+          <div class="brand-mark">📊</div>
+          <div>
+            <div class="brand-name">Executive Experience</div>
+            <div class="brand-series">Gradio 6.x Fullstack UI</div>
+          </div>
         </div>
-        <div class="badge-chip green">GRADIO 6.X INTERACTIVE</div>
-      </div>
+        <div class="chip-badge chip-emerald">LIVE PRODUCTION UI</div>
+      </header>
 
       <div class="slide-body">
-        <div class="eyebrow" style="color: var(--accent-emerald);">Live Dashboard & Chat</div>
-        <h1 class="slide-title">
-          The <span class="cyan">Executive Experience</span>
+        <div class="eyebrow-pill" style="color: var(--emerald);">
+          <span>Instant Command & Control</span>
+        </div>
+
+        <h1 class="hero-title">
+          The <span class="grad-cyan">Executive Experience</span>
         </h1>
 
-        <!-- Simulated Dashboard Mockup -->
-        <div class="bento-card" style="padding: 28px; background: rgba(15, 23, 42, 0.9);">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
-            <div style="font-weight: 700; font-size: 20px; color: #f8fafc;">
-              Executive Performance Dashboard
+        <!-- High-Fidelity Dashboard Mockup -->
+        <div class="dashboard-mockup">
+          <div class="mockup-topbar">
+            <div style="font-weight: 700; font-size: 17px; color: #fff; display: flex; align-items: center; gap: 8px;">
+              <span>🛒 Marketplace Executive Control Panel</span>
             </div>
-            <div style="padding: 6px 14px; background: rgba(0, 240, 255, 0.12); color: var(--accent-cyan); border-radius: 20px; font-size: 14px; font-weight: 700;">
+            <div style="padding: 4px 12px; background: rgba(0, 242, 254, 0.12); color: var(--cyan); border-radius: 9999px; font-size: 13px; font-weight: 700; border: 1px solid rgba(0, 242, 254, 0.3);">
               🌐 EN (English) ↔ ID (Bahasa)
             </div>
           </div>
 
-          <!-- 4 KPI Badges Grid -->
-          <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 24px;">
-            <div style="background: rgba(255, 255, 255, 0.04); padding: 18px; border-radius: 14px; border: 1px solid rgba(255, 255, 255, 0.06);">
-              <div style="font-size: 15px; color: #94a3b8; margin-bottom: 4px;">Net GMV (Audited)</div>
-              <div style="font-size: 28px; font-weight: 800; color: #38bdf8;">Rp 412.850.000</div>
+          <div class="kpi-tiles-grid">
+            <div class="kpi-tile">
+              <div class="kpi-tile-label">Net GMV (Clean)</div>
+              <div class="kpi-tile-val" style="color: var(--blue);">Rp 412.8M</div>
             </div>
-            <div style="background: rgba(255, 255, 255, 0.04); padding: 18px; border-radius: 14px; border: 1px solid rgba(255, 255, 255, 0.06);">
-              <div style="font-size: 15px; color: #94a3b8; margin-bottom: 4px;">Return Rate (%)</div>
-              <div style="font-size: 28px; font-weight: 800; color: #fb7185;">4.2%</div>
+            <div class="kpi-tile">
+              <div class="kpi-tile-label">Completed</div>
+              <div class="kpi-tile-val" style="color: var(--emerald);">2,048</div>
+            </div>
+            <div class="kpi-tile">
+              <div class="kpi-tile-label">Returns</div>
+              <div class="kpi-tile-val" style="color: var(--rose);">152</div>
+            </div>
+            <div class="kpi-tile">
+              <div class="kpi-tile-label">Return Rate</div>
+              <div class="kpi-tile-val" style="color: var(--amber);">4.2%</div>
             </div>
           </div>
 
-          <!-- Audit Trail Code Chip -->
-          <div style="background: #020617; padding: 14px 18px; border-radius: 10px; font-family: 'JetBrains Mono', monospace; font-size: 15px; color: #38bdf8; border: 1px solid rgba(255, 255, 255, 0.06);">
-            🔍 <b>Audit Trail:</b> SELECT platform, SUM(order_value) FROM orders WHERE order_status = 'COMPLETED'...
+          <div class="table-preview">
+            <div class="table-row table-header">
+              <span>Marketplace</span>
+              <span>Total Orders</span>
+              <span>Return Rate</span>
+              <span>Net GMV (IDR)</span>
+            </div>
+            <div class="table-row">
+              <span style="font-weight: 600; color: #fff;">Tokopedia</span>
+              <span>850</span>
+              <span style="color: var(--emerald);">3.8%</span>
+              <span style="color: var(--cyan); font-weight: 700;">Rp 182,500,000</span>
+            </div>
+            <div class="table-row">
+              <span style="font-weight: 600; color: #fff;">Shopee</span>
+              <span>780</span>
+              <span style="color: var(--rose);">5.1%</span>
+              <span style="color: var(--cyan); font-weight: 700;">Rp 145,200,000</span>
+            </div>
           </div>
         </div>
 
-        <ul class="bullet-list">
-          <li style="font-size: 22px;">
-            <span class="icon">🌐</span>
-            <span><b>Runtime Bilingual Toggle:</b> Real-time UI and LLM synthesis switch between English and Indonesian.</span>
-          </li>
-          <li style="font-size: 22px;">
-            <span class="icon">🔍</span>
-            <span><b>Full Financial Auditability:</b> Every number is verifiable via transparent SQL code inspection.</span>
-          </li>
-        </ul>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px;">
+          <div class="bento-card" style="padding: 22px;">
+            <div style="font-weight: 700; font-size: 20px; color: #fff; margin-bottom: 6px;">
+              🌐 Dynamic Bilingual Toggle
+            </div>
+            <p style="font-size: 17px; color: var(--text-muted); line-height: 1.4;">
+              Instant runtime switch between EN & ID—updating KPI labels, data tables, and synthesized answers without page reload.
+            </p>
+          </div>
+          <div class="bento-card" style="padding: 22px;">
+            <div style="font-weight: 700; font-size: 20px; color: #fff; margin-bottom: 6px;">
+              🔍 Transparent Audit Trail
+            </div>
+            <p style="font-size: 17px; color: var(--text-muted); line-height: 1.4;">
+              Every answer features an expandable SQL inspector displaying the exact query executed on DuckDB under the hood.
+            </p>
+          </div>
+        </div>
       </div>
 
-      <div class="slide-footer">
-        <div class="author-handle">
-          <span class="avatar-badge">🖥️</span>
-          <span>Zero-Latency Web Interface</span>
+      <footer class="slide-footer">
+        <div class="author-meta">
+          <span class="author-avatar">🖥️</span>
+          <span>Zero-Latency Responsive Web App</span>
         </div>
-        <div class="slide-counter">04 / 07 ➔</div>
-      </div>
-    </section>
+        <div class="slide-nav-hint">
+          <span class="page-indicator">04 / 07 ➔</span>
+        </div>
+      </footer>
+    </article>
 
-    <!-- ==================== SLIDE 5 ==================== -->
-    <section class="slide" id="slide5">
-      <div class="slide-header">
-        <div class="brand-tag">
-          <div class="brand-icon">🔄</div>
-          <span>Production Engineering</span>
+    <!-- =======================================================================
+         SLIDE 5: ENGINEERING ROBUSTNESS & SELF-CORRECTION
+         ======================================================================= -->
+    <article class="slide" id="slide-5">
+      <header class="slide-header">
+        <div class="brand-cluster">
+          <div class="brand-mark">🔄</div>
+          <div>
+            <div class="brand-name">Engineering Depth</div>
+            <div class="brand-series">Resilience & Self-Healing</div>
+          </div>
         </div>
-        <div class="badge-chip purple">SELF-HEALING CODE</div>
-      </div>
+        <div class="chip-badge chip-purple">FAULT-TOLERANT ENGINE</div>
+      </header>
 
       <div class="slide-body">
-        <div class="eyebrow purple">Robustness Under Stress</div>
-        <h1 class="slide-title">
-          Autonomous <span class="purple">Self-Correction Loop</span>
+        <div class="eyebrow-pill" style="color: var(--purple);">
+          <span>Autonomous Code Recovery</span>
+        </div>
+
+        <h1 class="hero-title">
+          Autonomous <span class="grad-purple">SQL Self-Correction</span>
         </h1>
-        <p class="lead-text">
-          Production systems must recover from errors gracefully without crashing or returning raw tracebacks to executives.
+
+        <p class="subtitle-text">
+          Enterprise production systems must self-heal from syntax errors without returning raw stack traces to decision-makers.
         </p>
 
-        <!-- Code Window Snippet -->
-        <div class="code-window">
-          <div class="window-header">
-            <div class="window-dots">
-              <div class="window-dot dot-red"></div>
-              <div class="window-dot dot-yellow"></div>
-              <div class="window-dot dot-green"></div>
+        <!-- Terminal Window Mockup -->
+        <div class="terminal-window">
+          <div class="terminal-header">
+            <div class="terminal-dots">
+              <span class="dot dot-r"></span>
+              <span class="dot dot-y"></span>
+              <span class="dot dot-g"></span>
             </div>
-            <div class="window-title">src/rag_engine.py - Self-Correction</div>
+            <span class="terminal-title">src/rag_engine.py — Self-Correction Loop</span>
           </div>
-          <pre class="code-content"><span class="kw">def</span> <span class="fn">execute_sql_with_self_correction</span>(client, query_text):
+          <pre class="code-block"><span class="c-kw">def</span> <span class="c-fn">execute_sql_with_self_correction</span>(client, query_text):
     current_sql = generate_text_to_sql(client, query_text)
-    <span class="kw">for</span> attempt <span class="kw">in</span> range(MAX_RETRIES):
+    <span class="c-kw">for</span> attempt <span class="c-kw">in</span> range(MAX_RETRIES):
         result = run_sql_query(current_sql)
-        <span class="kw">if</span> result[<span class="str">"success"</span>]:
-            <span class="kw">return</span> current_sql, result
-        <span class="cm"># Autonomous repair prompt triggered on DuckDB error:</span>
-        current_sql = ask_llm_to_fix(current_sql, result[<span class="err">"error"</span>])</pre>
+        <span class="c-kw">if</span> result[<span class="c-str">"success"</span>]:
+            <span class="c-kw">return</span> current_sql, result
+        
+        <span class="c-cm"># Intercept DuckDB error & trigger autonomous prompt repair:</span>
+        current_sql = ask_llm_to_fix(current_sql, result[<span class="c-err">"error"</span>])</pre>
         </div>
 
         <div class="bento-card" style="display: flex; align-items: center; justify-content: space-between;">
           <div>
-            <div style="font-weight: 700; font-size: 22px; color: #fff;">Gemini Model Cascade Ladder</div>
-            <div style="color: #94a3b8; font-size: 19px; margin-top: 4px;">Automatic fallback on API congestion (HTTP 503/429)</div>
+            <div style="font-weight: 800; font-size: 22px; color: #fff;">
+              Gemini Model Cascade Ladder
+            </div>
+            <div style="font-size: 18px; color: var(--text-muted); margin-top: 4px;">
+              Automated fallback under API congestion & rate limits (HTTP 503 / 429)
+            </div>
           </div>
-          <div style="font-family: 'JetBrains Mono', monospace; font-size: 17px; background: rgba(255, 255, 255, 0.08); padding: 8px 16px; border-radius: 8px; color: var(--accent-cyan);">
+          <div style="background: rgba(0, 242, 254, 0.1); border: 1px solid rgba(0, 242, 254, 0.3); padding: 10px 18px; border-radius: 12px; font-family: 'JetBrains Mono', monospace; font-size: 16px; color: var(--cyan); font-weight: 700;">
             3.6 Flash ➔ 2.0 Flash ➔ 1.5 Flash
           </div>
         </div>
       </div>
 
-      <div class="slide-footer">
-        <div class="author-handle">
-          <span class="avatar-badge">🛡️</span>
-          <span>Fault-Tolerant AI Engine</span>
+      <footer class="slide-footer">
+        <div class="author-meta">
+          <span class="author-avatar">🛡️</span>
+          <span>Zero Downtime Architecture</span>
         </div>
-        <div class="slide-counter">05 / 07 ➔</div>
-      </div>
-    </section>
+        <div class="slide-nav-hint">
+          <span class="page-indicator">05 / 07 ➔</span>
+        </div>
+      </footer>
+    </article>
 
-    <!-- ==================== SLIDE 6 ==================== -->
-    <section class="slide" id="slide6">
-      <div class="slide-header">
-        <div class="brand-tag">
-          <div class="brand-icon">🏆</div>
-          <span>Verification & Metrics</span>
+    <!-- =======================================================================
+         SLIDE 6: VERIFIED IMPACT & METRICS
+         ======================================================================= -->
+    <article class="slide" id="slide-6">
+      <header class="slide-header">
+        <div class="brand-cluster">
+          <div class="brand-mark">🏆</div>
+          <div>
+            <div class="brand-name">System Verification</div>
+            <div class="brand-series">Audited Benchmarks</div>
+          </div>
         </div>
-        <div class="badge-chip green">PROVEN RESULTS</div>
-      </div>
+        <div class="chip-badge chip-emerald">100% TEST PASSING</div>
+      </header>
 
       <div class="slide-body">
-        <div class="eyebrow" style="color: var(--accent-emerald);">Measurable Business Impact</div>
-        <h1 class="slide-title">
-          Audited <span class="cyan">Impact & Reliability</span>
+        <div class="eyebrow-pill" style="color: var(--emerald);">
+          <span>Real-World Engineering Value</span>
+        </div>
+
+        <h1 class="hero-title">
+          Audited <span class="grad-cyan">Impact & Reliability</span>
         </h1>
 
-        <div style="display: flex; flex-direction: column; gap: 20px;">
-          <div class="bento-card" style="display: flex; align-items: center; gap: 30px;">
-            <div style="font-size: 64px; font-weight: 800; color: var(--accent-cyan); min-width: 120px;">0%</div>
+        <div class="metrics-trio">
+          <div class="metric-row-card">
+            <div class="big-num grad-cyan">0%</div>
             <div>
-              <div style="font-size: 26px; font-weight: 700; color: #fff;">Financial Hallucination</div>
-              <div style="font-size: 20px; color: #94a3b8; margin-top: 4px;">
-                100% of mathematical calculations are executed directly by the in-process DuckDB OLAP engine.
-              </div>
+              <h3 style="font-size: 26px; color: #fff; margin-bottom: 6px;">Financial Hallucination</h3>
+              <p style="font-size: 20px; color: var(--text-muted); line-height: 1.4;">
+                100% of arithmetic operations execute directly in the DuckDB OLAP engine. Zero guesswork.
+              </p>
             </div>
           </div>
 
-          <div class="bento-card" style="display: flex; align-items: center; gap: 30px;">
-            <div style="font-size: 64px; font-weight: 800; color: #38bdf8; min-width: 120px;">100%</div>
+          <div class="metric-row-card">
+            <div class="big-num" style="color: var(--blue);">100%</div>
             <div>
-              <div style="font-size: 26px; font-weight: 700; color: #fff;">Automated Test Passing</div>
-              <div style="font-size: 20px; color: #94a3b8; margin-top: 4px;">
-                Full 4/4 passing score on database integrity, metric logic, vector search, and intent routing.
-              </div>
+              <h3 style="font-size: 26px; color: #fff; margin-bottom: 6px;">Automated Verification</h3>
+              <p style="font-size: 20px; color: var(--text-muted); line-height: 1.4;">
+                Full 4/4 passing score on end-to-end database, business metrics, vector retrieval, and intent routing.
+              </p>
             </div>
           </div>
 
-          <div class="bento-card" style="display: flex; align-items: center; gap: 30px;">
-            <div style="font-size: 64px; font-weight: 800; color: var(--accent-purple); min-width: 120px;">$0</div>
+          <div class="metric-row-card">
+            <div class="big-num grad-purple">$0</div>
             <div>
-              <div style="font-size: 26px; font-weight: 700; color: #fff;">Infrastructure Hosting Cost</div>
-              <div style="font-size: 20px; color: #94a3b8; margin-top: 4px;">
-                ZeroGPU & CPU Basic compatible. Self-healing cold-start provisioning on Hugging Face Spaces.
-              </div>
+              <h3 style="font-size: 26px; color: #fff; margin-bottom: 6px;">Cloud Infrastructure Cost</h3>
+              <p style="font-size: 20px; color: var(--text-muted); line-height: 1.4;">
+                ZeroGPU & CPU Basic optimized. Self-healing cold-start provisioning hosted live on Hugging Face Spaces.
+              </p>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="slide-footer">
-        <div class="author-handle">
-          <span class="avatar-badge">📈</span>
-          <span>Verified Benchmarks</span>
+      <footer class="slide-footer">
+        <div class="author-meta">
+          <span class="author-avatar">📈</span>
+          <span>Verified Benchmarks & Tests</span>
         </div>
-        <div class="slide-counter">06 / 07 ➔</div>
-      </div>
-    </section>
+        <div class="slide-nav-hint">
+          <span class="page-indicator">06 / 07 ➔</span>
+        </div>
+      </footer>
+    </article>
 
-    <!-- ==================== SLIDE 7 ==================== -->
-    <section class="slide" id="slide7">
-      <div class="slide-header">
-        <div class="brand-tag">
-          <div class="brand-icon">🚀</div>
-          <span>Open Source & Demo</span>
+    <!-- =======================================================================
+         SLIDE 7: CALL TO ACTION & OPEN SOURCE
+         ======================================================================= -->
+    <article class="slide" id="slide-7">
+      <header class="slide-header">
+        <div class="brand-cluster">
+          <div class="brand-mark">🚀</div>
+          <div>
+            <div class="brand-name">Open Source & Live Demo</div>
+            <div class="brand-series">Production Showcase</div>
+          </div>
         </div>
-        <div class="badge-chip">TRY IT NOW</div>
-      </div>
+        <div class="chip-badge chip-cyan">TRY IT NOW</div>
+      </header>
 
       <div class="slide-body">
-        <div class="eyebrow">Production Ready</div>
-        <h1 class="slide-title">
-          Test the System <span class="cyan">Live in Browser</span>
+        <div class="eyebrow-pill" style="color: var(--cyan);">
+          <span>Ready For Inspection</span>
+        </div>
+
+        <h1 class="hero-title">
+          Test the System <span class="grad-cyan">Live in Browser</span>
         </h1>
-        <p class="lead-text">
-          The complete code, evaluation suite, and interactive Gradio 6.x dashboard are fully public and open-source.
+
+        <p class="subtitle-text">
+          The complete source code, automated evaluation suite, and interactive Gradio 6.x dashboard are 100% public and live.
         </p>
 
-        <div style="display: flex; flex-direction: column; gap: 24px;">
-          <div class="bento-card" style="border: 1px solid var(--accent-cyan); background: rgba(0, 240, 255, 0.04);">
-            <div style="font-size: 20px; color: var(--accent-cyan); font-weight: 700; margin-bottom: 6px;">
-              🚀 LIVE DEMO (FREE ON HUGGING FACE SPACES)
+        <div class="cta-card-row">
+          <a href="https://huggingface.co/spaces/rfahrur6045/rag-marketplace-intelligence" target="_blank" style="text-decoration: none;">
+            <div class="interactive-link-box" style="border: 1px solid var(--cyan); background: rgba(0, 242, 254, 0.06);">
+              <div class="link-info">
+                <h4>🚀 Interactive Live Demo (Hosted on Hugging Face Spaces)</h4>
+                <p>huggingface.co/spaces/rfahrur6045/rag-marketplace-intelligence</p>
+              </div>
+              <div class="link-badge" style="color: var(--cyan);">➔</div>
             </div>
-            <div style="font-family: 'JetBrains Mono', monospace; font-size: 22px; color: #f8fafc;">
-              huggingface.co/spaces/rfahrur6045/rag-marketplace-intelligence
-            </div>
-          </div>
+          </a>
 
-          <div class="bento-card" style="border: 1px solid rgba(255, 255, 255, 0.15);">
-            <div style="font-size: 20px; color: var(--accent-purple); font-weight: 700; margin-bottom: 6px;">
-              💻 GITHUB REPOSITORY & BLUEPRINT
+          <a href="https://github.com/rfahur11/rag-marketplace" target="_blank" style="text-decoration: none;">
+            <div class="interactive-link-box" style="border: 1px solid rgba(255, 255, 255, 0.15);">
+              <div class="link-info">
+                <h4>💻 Production Source Code & Evaluation Suite</h4>
+                <p style="color: var(--purple);">github.com/rfahur11/rag-marketplace</p>
+              </div>
+              <div class="link-badge" style="color: var(--purple);">★</div>
             </div>
-            <div style="font-family: 'JetBrains Mono', monospace; font-size: 22px; color: #f8fafc;">
-              github.com/rfahur11/rag-marketplace
-            </div>
-          </div>
+          </a>
         </div>
 
-        <div style="padding: 24px; background: rgba(255, 255, 255, 0.03); border-radius: 16px; text-align: center; font-size: 22px; color: #cbd5e1;">
-          💬 <b>Community Discussion:</b> How is your engineering team currently bridging structured SQL data with LLM RAG pipelines?
+        <div class="bento-card" style="text-align: center; padding: 26px;">
+          <div style="font-size: 21px; font-weight: 700; color: #fff; margin-bottom: 8px;">
+            💬 Let's Discuss in the Comments:
+          </div>
+          <p style="font-size: 19px; color: var(--text-muted); line-height: 1.45;">
+            How does your engineering team currently bridge structured database analytics with LLM reasoning?
+          </p>
         </div>
       </div>
 
-      <div class="slide-footer">
-        <div class="author-handle">
-          <span class="avatar-badge">🤝</span>
+      <footer class="slide-footer">
+        <div class="author-meta">
+          <span class="author-avatar">🤝</span>
           <span>Let's Connect on LinkedIn & GitHub</span>
         </div>
-        <div class="slide-counter">07 / 07 ✅</div>
-      </div>
-    </section>
+        <div class="slide-nav-hint">
+          <span class="page-indicator">07 / 07 ✅</span>
+        </div>
+      </footer>
+    </article>
 
   </main>
 
   <script>
     function setZoom(scale) {
-      const wrapper = document.getElementById('carouselWrapper');
-      wrapper.style.transform = `scale(${scale})`;
+      const stage = document.getElementById('stage');
+      stage.style.transform = `scale(${scale})`;
       
-      // Update active button
-      const buttons = document.querySelectorAll('.zoom-btn');
-      buttons.forEach(btn => {
+      document.querySelectorAll('.view-btn').forEach(btn => {
         btn.classList.remove('active');
         if (btn.innerText.includes(Math.round(scale * 100))) {
           btn.classList.add('active');
