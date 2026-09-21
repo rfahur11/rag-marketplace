@@ -147,12 +147,12 @@ with gr.Blocks(title="Marketplace Intelligence System RAG") as demo:
         with gr.Column(scale=4):
             header_md = gr.Markdown("""
             # 🛒 Marketplace Intelligence System (Hybrid RAG)
-            ### Executive Dashboard & Anti-Hallucination AI Assistant untuk E-Commerce
+            ### Executive Dashboard & Anti-Hallucination AI Assistant for E-Commerce
             """)
         with gr.Column(scale=1):
             lang_selector = gr.Radio(
-                choices=["ID (Bahasa)", "EN (English)"],
-                value="ID (Bahasa)",
+                choices=["EN (English)", "ID (Bahasa)"],
+                value="EN (English)",
                 label="🌐 Language / Bahasa",
                 interactive=True
             )
@@ -160,17 +160,17 @@ with gr.Blocks(title="Marketplace Intelligence System RAG") as demo:
     with gr.Tabs():
         # TAB 1: EXECUTIVE DASHBOARD
         with gr.TabItem("📊 Executive Performance Dashboard") as tab_dash:
-            kpi_title_md = gr.Markdown("### 📈 Ringkasan Metrik Performa Multi-Channel")
+            kpi_title_md = gr.Markdown("### 📈 Multi-Channel Performance Metrics Summary")
             
             with gr.Row():
-                kpi_gmv = gr.Textbox(label="Net GMV (Bersih)", interactive=False)
-                kpi_completed = gr.Textbox(label="Transaksi Selesai", interactive=False)
-                kpi_returned = gr.Textbox(label="Transaksi Retur", interactive=False)
+                kpi_gmv = gr.Textbox(label="Net GMV (Clean)", interactive=False)
+                kpi_completed = gr.Textbox(label="Completed Orders", interactive=False)
+                kpi_returned = gr.Textbox(label="Returned Orders", interactive=False)
                 kpi_ret_rate = gr.Textbox(label="Return Rate (%)", interactive=False)
                 
-            btn_refresh = gr.Button("🔄 Refresh Data Metrik", variant="secondary")
+            btn_refresh = gr.Button("🔄 Refresh Metrics", variant="secondary")
             
-            table_title_md = gr.Markdown("### 🛍️ Breakdown Performa per Marketplace")
+            table_title_md = gr.Markdown("### 🛍️ Performance Breakdown by Marketplace")
             table_platform = gr.Dataframe(interactive=False)
             
             # Event handler dashboard refresh
@@ -193,20 +193,20 @@ with gr.Blocks(title="Marketplace Intelligence System RAG") as demo:
 
         # TAB 2: AI ASSISTANT CHATBOT
         with gr.TabItem("🤖 AI Assistant (Text-to-SQL + Vector RAG)") as tab_chat:
-            chat_title_md = gr.Markdown("### 💬 Tanya Jawab Performa & Komplain Pelanggan")
-            chat_sub_md = gr.Markdown("Gunakan Bahasa Indonesia atau Inggris alami untuk menanyakan metrik penjualan atau ulasan produk.")
+            chat_title_md = gr.Markdown("### 💬 Q&A: Performance Metrics & Customer Complaints")
+            chat_sub_md = gr.Markdown("Ask questions in natural English or Indonesian to analyze sales metrics or customer reviews.")
             
             chatbot = gr.Chatbot(label="Executive AI Assistant", height=400)
             
             with gr.Row():
                 msg_input = gr.Textbox(
-                    placeholder="Contoh: Berapa total Net GMV Tokopedia dan kenapa banyak komplain?", 
-                    label="Pertanyaan Anda",
+                    placeholder="Example: What is the total Net GMV of Tokopedia and why are there complaints?", 
+                    label="Your Question",
                     scale=4
                 )
-                btn_send = gr.Button("Kirim 🚀", variant="primary", scale=1)
+                btn_send = gr.Button("Send 🚀", variant="primary", scale=1)
                 
-            with gr.Accordion("🔍 Audit Trail (Lihat Query SQL DuckDB yang Dieksekusi AI)", open=False) as sql_accordion:
+            with gr.Accordion("🔍 Audit Trail (Inspect DuckDB SQL Query Executed by AI)", open=False) as sql_accordion:
                 sql_inspector = gr.Code(label="Executed SQL Query", language="sql", interactive=False)
                 
             # Sample quick questions in both Indonesian & English
