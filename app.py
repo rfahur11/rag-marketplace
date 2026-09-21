@@ -14,11 +14,11 @@ from src.rag_engine import process_rag_query
 
 # ZeroGPU compatibility for Hugging Face Spaces free tier
 try:
-    import spaces
-    @spaces.GPU(duration=1)
+    import spaces  # type: ignore
+    @spaces.GPU(duration=1)  # type: ignore
     def dummy_gpu():
         return None
-except ImportError:
+except (ImportError, ModuleNotFoundError):
     def dummy_gpu():
         return None
 
